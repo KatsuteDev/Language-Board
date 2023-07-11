@@ -1,0 +1,16 @@
+name: npm CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+jobs:
+  npm_ci:
+    name: npm CI
+    uses: Katsute/Workflows/.github/workflows/npm.ci.yml@main
+    with:
+      os: windows-latest
+      test: false
