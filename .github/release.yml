@@ -1,0 +1,34 @@
+changelog:
+  categories:
+    - title: Breaking Change
+      labels:
+        - breaking change
+    - title: Deprecated
+      labels:
+        - deprecated
+    - title: Removed
+      labels:
+        - removed
+    - title: Security
+      labels:
+        - security
+    - title: New Features
+      labels:
+        - enhancements
+        - experimental
+        - feature
+        - feature request
+    - title: Fixes
+      labels:
+        - bug
+        - critical bug
+        - critical issue
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Optimizations
+      labels:
+        - optimization
+    - title: Dependencies
+      labels:
+        - dependencies
