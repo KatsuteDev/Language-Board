@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Katsute <https://github.com/Katsute>
+ * Copyright (C) 2023 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,54 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-* {
+import { contextBridge, ipcRenderer } from "electron";
 
-    font-family: Open Sans, Helvetica, Verdana, Arial, sans-serif;
-
-}
-
-*, *::before, *::after {
-
-    box-sizing: border-box;
-
-}
-
-html, body {
-
-    width: 100vw;
-    height: 100vh;
-    overflow:hidden;
-
-}
-
-body {
-
-    position: relative;
-    margin: 0;
-
-}
-
-body, div {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-}
-
-p {
-
-    user-select: none;
-    -webkit-user-select: none;
-
-    margin: 0;
-    padding: .5rem;
-
-}
-
-img {
-
-    -webkit-user-drag: none;
-
-}
+contextBridge.exposeInMainWorld("api", {
+    send: (channel: string, data: Object) => {
+        ipcRenderer.send(channel, data);
+    },
+    receive: (channel: string, func: CallableFunction) => {
+        ipcRenderer.on(channel, (event: Electron.IpcRendererEvent, ...args: any[]) => func(...args));
+    }
+});

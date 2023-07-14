@@ -19,6 +19,28 @@
 const fs = require("fs");
 const path = require("path");
 
-fs.copyFileSync(path.join(__dirname, "src", "app", "index.html"), path.join(__dirname, "dist", "app", "index.html"));
-fs.copyFileSync(path.join(__dirname, "src", "auth", "index.html"), path.join(__dirname, "dist", "auth", "index.html"));
-fs.copyFileSync(path.join(__dirname, "src", "web", "index.html"), path.join(__dirname, "dist", "web", "index.html"));
+const minify = (str) =>
+    str .replace(/<!--.*-->/gs, '')  // <!-- comments
+        .replace(/\/\*.*\*\//gs, '') // /* comments
+        .replace(/ \/\/.*$/gm,'')   // // comments
+        .replace(/ +/gm, ' ')       // extra spaces
+        .replace(/^ +/gm, '')       // leading space
+        .replace(/\r?\n/gm, '')     // new line
+        .trim();
+
+const apply = (dir, func, filter) => {
+    for(const file of fs.readdirSync(dir, {withFileTypes: true})){
+        if(file.isDirectory())
+            apply(path.join(dir, file.name), func, filter);
+        else if(!filter || filter(path.join(dir, file.name)))
+            func(path.join(dir, file.name));
+    }
+}
+
+apply(
+    path.join(__dirname, "src"),
+    file => fs.copyFileSync(file, path.join(__dirname, "dist", file.substring(path.join(__dirname, "src").length))),
+    file => file.endsWith(".html") || file.endsWith(".css")
+);
+
+apply(path.join(__dirname, "dist"), file => fs.writeFileSync(file, minify(fs.readFileSync(file, "utf-8")), "utf-8"));
