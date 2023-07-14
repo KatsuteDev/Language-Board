@@ -20,6 +20,8 @@
 
     font-family: Open Sans, Helvetica, Verdana, Arial, sans-serif;
 
+    outline: none;
+
 }
 
 *, *::before, *::after {
@@ -65,5 +67,36 @@ p {
 img {
 
     -webkit-user-drag: none;
+
+}
+
+#code {
+
+    transition: max-height 1.5s ease-in-out;
+
+    max-height: 2000px;
+    overflow: hidden;
+
+}
+
+#code.hidden {
+
+    max-height: 0;
+
+}
+
+#code input {
+
+    font-family: "Consolas" monospace;
+
+    font-size: 2rem;
+
+    text-indent: 1rem;
+    letter-spacing: 1rem;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    width: 12rem;
 
 }

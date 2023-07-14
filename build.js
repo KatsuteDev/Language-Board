@@ -20,12 +20,12 @@ const fs = require("fs");
 const path = require("path");
 
 const minify = (str) =>
-    str .replace(/<!--.*-->/gs, '')  // <!-- comments
-        .replace(/\/\*.*\*\//gs, '') // /* comments
-        .replace(/ \/\/.*$/gm,'')   // // comments
-        .replace(/ +/gm, ' ')       // extra spaces
-        .replace(/^ +/gm, '')       // leading space
-        .replace(/\r?\n/gm, '')     // new line
+    str .replace(/<!--.*-->/gs, '')          // <!-- comments
+        .replace(/\/\*.*\*\//gs, '')         // /* comments
+        .replace(/(?<!(`|").*)\/\/.*$/gm,'') // // comments
+        .replace(/ +/gm, ' ')                // extra spaces
+        .replace(/^ +/gm, '')                // leading space
+        .replace(/\r?\n/gm, '')              // new line
         .trim();
 
 const apply = (dir, func, filter) => {

@@ -16,77 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
- * {
+const stream: EventSource = new EventSource("authenticated");
 
-    font-family: Open Sans, Helvetica, Verdana, Arial, sans-serif;
+stream.onmessage = (e: MessageEvent) => {
+    if(e.data === "true"){
 
-    outline: none;
-
-}
-
-*, *::before, *::after {
-
-    box-sizing: border-box;
-
-}
-
-html, body {
-
-    width: 100vw;
-    height: 100vh;
-    overflow:hidden;
-
-}
-
-body {
-
-    position: relative;
-    margin: 0;
-
-}
-
-body, div {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-}
-
-h1, p {
-
-    user-select: none;
-    -webkit-user-select: none;
-
-    margin: 0;
-    padding: .5rem;
-
-}
-
-#code {
-
-    font-family: "Consolas" monospace;
-
-    font-size: 4rem;
-
-    text-indent: 1rem;
-    letter-spacing: 1rem;
-
-    text-align: center;
-    text-transform: uppercase;
-
-}
-
-#value {
-
-    font-size: 1.5rem;
-    text-align: right;
-
-}
-
-.hidden {
-
-    display: none;
-
+        stream.close();
+    }
 }

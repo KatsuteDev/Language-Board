@@ -19,10 +19,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("api", {
-    send: (channel: string, data: Object) => {
-        ipcRenderer.send(channel, data);
-    },
-    receive: (channel: string, func: CallableFunction) => {
-        ipcRenderer.on(channel, (event: Electron.IpcRendererEvent, ...args: any[]) => func(...args));
-    }
+    send: (channel: string, ...args: any[]) => ipcRenderer.send(channel, ...args),
+    on: (channel: string, func: (...args: any[]) => void) => ipcRenderer.on(channel, (event: Electron.IpcRendererEvent, ...args: any[]) => func(...args))
 });

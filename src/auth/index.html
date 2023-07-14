@@ -19,8 +19,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:;">
+        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:;">
 
         <meta http-equiv="Expires" content="0">
         <meta http-equiv="Pragma" content="no-cache">
@@ -35,6 +37,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
             <p>Scan this QR code to pair.</p>
             <img id="qr">
             <p id="url"></p>
+        </div>
+        <div id="code" class="hidden">
+            <p>Enter pairing code:</p>
+            <input id="value" type="text" spellcheck="false"  maxlength="4">
         </div>
 
         <script src="web.js"></script>

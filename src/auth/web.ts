@@ -16,7 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-(window as any).api.receive("init", (data: {qr: string, url: string}) => {
+(window as any).api.on("auth:init", (data: {qr: string, url: string}) => {
     (document.querySelector("#qr") as HTMLImageElement).src = data.qr;
     (document.querySelector("#url") as HTMLParagraphElement).innerText = data.url;
 });
+
+(window as any).api.on("auth:show", () => {
+    (document.querySelector("#code") as HTMLDivElement).classList.remove("hidden");
+});
+
+const codeInput: HTMLInputElement = document.querySelector("#value")!;
+const mask: RegExp = /[^a-zA-Z0-9]+/g;
+
+codeInput.oninput = (e: Event) => {
+    codeInput.value = codeInput.value.replace(mask, "");
+    codeInput.value.length == 4 && submit();
+};
+
+codeInput.onkeydown = (e: KeyboardEvent) => {
+    e.key === "Enter" && codeInput.value.length == 4 && submit();
+};
+
+const submit: () => void = () => (window as any).api.send("auth:code", codeInput.value);

@@ -17,23 +17,21 @@
  */
 
 import * as qrcode from "qrcode";
-import { BrowserWindow } from "electron";
+import { BrowserWindow, ipcMain } from "electron";
 
 import * as os from "os";
-import * as http from "http";
 import * as path from "path";
 
 import { activeWindow } from "..";
-import { handler } from "./server";
-
-http.globalAgent.maxSockets = 10;
+import * as app from "../app";
+import * as server from "../web";
 
 const width: number = 275;
 const height: number = 400;
 
-let auth: string = "";
+const codes: {[ip: string]: string} = {};
 
-export const launch = async () => {
+export const launch: () => void = async () => {
     const url: string = `http://${ip()}`;
     const qr: string = await qrcode.toDataURL(url);
 
@@ -43,38 +41,64 @@ export const launch = async () => {
 
         width,
         height,
-        minWidth: width,
-        minHeight: height,
 
         resizable: false,
         maximizable: false,
 
         fullscreenable: false,
-
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: true,
             preload: path.join(__dirname, "../", "interface.js")
         }
     }));
 
     window.loadFile(path.join(__dirname, "index.html"));
-    // window.removeMenu();
+    window.removeMenu();
     window.once("ready-to-show", () => {
+        window.webContents.send("auth:init", {qr, url});
         window.show();
-        window.webContents.send("init", {qr, url});
     });
 
-    const server: http.Server = http.createServer(handler).listen(7272);
+    ipcMain.on("auth:code", (event: Electron.IpcMainEvent, ...args: any[]) => {
+        const match: string = (args[0] || "").toUpperCase();
+        let ip: string | undefined;
+
+        for(const [k, v] of Object.entries(codes)){
+            if(v === match){
+                ip = k;
+                break;
+            }
+        }
+
+        if(ip){
+            server.lock(ip);
+            ipcMain.removeAllListeners("auth:init");
+            ipcMain.removeAllListeners("auth:show");
+            ipcMain.removeAllListeners("auth:code");
+            app.launch();
+        }
+    });
+
+    server.launch();
+}
+
+export const code: (ip: string) => string = (ip: string) => {
+    if(codes[ip]) return codes[ip];
+
+    const taken: string[] = Object.values(codes);
+
+    let c: string;
+    do{ c = generateCode(4);
+    }while(taken.includes(c));
+    return codes[ip] = c;
 }
 
 const ip: () => string = () => Object
     .values(os.networkInterfaces())
     .map(v => v!.filter((i: os.NetworkInterfaceInfo) => i.family === "IPv4" && !i.internal)[0])[0].address;
 
-const chars: string = "abcdefghijklmnopqrstuvwxyz0123456789-_";
+const chars: string = "BCDFGHJKLMNPQRSTVWXZ2456789";
 
-const code: (length: number) => string = (length: number) => {
+export const generateCode: (length: number) => string = (length: number) => {
     let result: string = "";
     for(let i = 0; i < length; i++)
         result += chars.charAt(Math.floor(Math.random() * chars.length));

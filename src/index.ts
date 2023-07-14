@@ -24,11 +24,17 @@ export const osx: boolean = process.platform == "darwin";
 let window: BrowserWindow;
 let tray: Tray;
 
-export const activeWindow: (browserWindow?: BrowserWindow) => BrowserWindow = (browserWindow?: BrowserWindow) => browserWindow ? window = browserWindow : window;
+export const activeWindow: (browserWindow?: BrowserWindow) => BrowserWindow = (browserWindow?: BrowserWindow) => {
+    if(browserWindow && browserWindow !== window){
+        let old = window;
+        window = browserWindow;
+        old && old.destroy();
+    }
+    return window;
+};
 export const activeTray: (trayMenu?: Tray) => Tray = (trayMenu?: Tray) => trayMenu ? tray = trayMenu : tray;
 
-const launch = () => {
-
+export const launch: () => void = async () => {
     if(require("electron-squirrel-startup") || !app.requestSingleInstanceLock()){
         app.quit();
         process.exit(0);
@@ -48,6 +54,7 @@ const launch = () => {
                 process.exit(0);
             }
         });
+
     auth.launch();
 }
 
