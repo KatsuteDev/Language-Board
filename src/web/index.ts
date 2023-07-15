@@ -41,6 +41,8 @@ http.globalAgent.maxSockets = 10;
 
 let locked: string;
 
+const title: string = "Mobile Board";
+
 export const launch: () => void = () => {
     const server: http.Server = http.createServer(handler).listen(7272, "0.0.0.0"); // <- enforce IPv4
 }
@@ -62,7 +64,9 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
         const code: string = auth.code(ip);
 
         res.writeHead(200, typeHTML);
-        return res.end(html.replace("{{ code }}", code));
+        return res.end(html
+            .replace("{{ code }}", code)
+            .replace("{{ auth }}", `${!!locked}`));
     }else if(p === "/favicon.ico"){
 
     }else if(p === "/index.css"){
@@ -70,7 +74,7 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
         return res.end(css);
     }else if(p === "/index.js"){
         res.writeHead(200, typeJS);
-        return res.end(js);
+        return res.end(js.replace(/{{ title }}/gm, title));
     }else if(p == "/authenticated"){
         let interval: NodeJS.Timeout;
         res.writeHead(200, typeEvent);

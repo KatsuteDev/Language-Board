@@ -23,9 +23,9 @@ const minify = (str) =>
     str .replace(/<!--.*-->/gs, '')          // <!-- comments
         .replace(/\/\*.*\*\//gs, '')         // /* comments
         .replace(/(?<!(`|").*)\/\/.*$/gm,'') // // comments
-        .replace(/ +/gm, ' ')                // extra spaces
         .replace(/^ +/gm, '')                // leading space
-        .replace(/\r?\n/gm, '')              // new line
+        .replace(/\r?\n/gm, ' ')             // new line
+        .replace(/ +/gm, ' ')                // extra spaces
         .trim();
 
 const apply = (dir, func, filter) => {

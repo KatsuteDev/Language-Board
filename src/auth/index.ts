@@ -29,11 +29,13 @@ import * as server from "../web";
 const width: number = 275;
 const height: number = 400;
 
+const title: string = "Mobile Board Pairing";
+
 const codes: {[ip: string]: string} = {};
 
 export const launch: () => void = async () => {
-    const url: string = `http://${ip()}`;
-    const qr: string = await qrcode.toDataURL(url); // todo: remove padding on image
+    const url: string = `${ip()}:7272`;
+    const qr: string = await qrcode.toDataURL(`http://${url}`, {margin: 0});
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
         title: "Mobile Board Pairing",
@@ -43,19 +45,27 @@ export const launch: () => void = async () => {
         height,
 
         resizable: false,
+        minimizable: false,
         maximizable: false,
-
         fullscreenable: false,
+
+        titleBarStyle: "hidden",
+
         webPreferences: {
             preload: path.join(__dirname, "../", "interface.js")
         }
     }));
 
     window.loadFile(path.join(__dirname, "index.html"));
-    window.removeMenu();
+    // window.removeMenu();
     window.once("ready-to-show", () => {
-        window.webContents.send("auth:init", {qr, url});
+        window.webContents.send("auth:init", {title, qr, url});
         window.show();
+    });
+
+    ipcMain.on("auth:close", (event: Electron.IpcMainEvent, ...args: any[]) => {
+        window.hide();
+        window.destroy();
     });
 
     ipcMain.on("auth:code", (event: Electron.IpcMainEvent, ...args: any[]) => {
@@ -87,8 +97,8 @@ export const code: (ip: string) => string = (ip: string) => {
     const taken: string[] = Object.values(codes);
 
     let c: string;
-    do{ c = generateCode(4);
-    }while(taken.includes(c));
+    do c = generateCode(4);
+    while(taken.includes(c));
     return codes[ip] = c;
 }
 

@@ -40,12 +40,13 @@ html, body {
 
 body {
 
-    position: relative;
     margin: 0;
+
+    background-color: #3b82f6;
 
 }
 
-body, div {
+body, main, div {
 
     display: flex;
     flex-direction: column;
@@ -58,6 +59,8 @@ h1, p {
 
     user-select: none;
     -webkit-user-select: none;
+
+    color: white;
 
     margin: 0;
     padding: .5rem;

@@ -33,15 +33,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <body>
         <noscript>This application needs javascript to run.</noscript>
 
-        <div id="login">
-            <p>Scan this QR code to pair.</p>
-            <img id="qr">
-            <p id="url"></p>
-        </div>
-        <div id="code" class="hidden">
-            <p>Enter pairing code:</p>
-            <input id="value" type="text" spellcheck="false"  maxlength="4">
-        </div>
+        <header>
+            <p id="title"></p>
+            <button id="close-button"><span>×</span></button>
+        </header>
+
+        <main>
+            <section id="login">
+                <div>
+                    <p>Scan QR to pair device</p>
+                    <img id="qr">
+                    <p id="url"></p>
+                </div>
+            </section>
+            <section id="code" class="hidden">
+                <div>
+                    <p>Enter pairing code:</p>
+                    <input id="value" type="text" spellcheck="false"  maxlength="4">
+                </div>
+            </section>
+        </main>
 
         <script src="web.js"></script>
     </body>

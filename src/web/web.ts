@@ -18,9 +18,23 @@
 
 const stream: EventSource = new EventSource("authenticated");
 
+const auth: HTMLDivElement = document.querySelector("#auth")!;
+const input: HTMLDivElement = document.querySelector("#input")!;
+
 stream.onmessage = (e: MessageEvent) => {
     if(e.data === "true"){
-
+        showInput();
         stream.close();
     }
+}
+
+const showCode: () => void = () => {
+    document.title = "{{ title }} Pairing";
+    auth.classList.remove("hidden");
+}
+
+const showInput: () => void = () => {
+    document.title = "{{ title }}";
+    auth.classList.add("hidden");
+    input.classList.remove("hidden");
 }

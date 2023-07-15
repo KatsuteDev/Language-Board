@@ -21,8 +21,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:;">
-        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:;">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline';">
+        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline';">
 
         <meta http-equiv="Expires" content="0">
         <meta http-equiv="Pragma" content="no-cache">
@@ -33,15 +33,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     <body>
         <noscript>This application needs javascript to run.</noscript>
 
-        <div id="auth" class="hidden">
-            <h1>Pairing code:</h1>
-            <p id="code">{{ code }}</p>
-        </div>
+        <main>
+            <div id="auth" class="hidden">
+                <h1>Pairing code:</h1>
+                <p id="code">{{ code }}</p>
+            </div>
 
-        <div id="input" class="hidden">
-            <input id="value" type="text" spellcheck="false">
-        </div>
+            <div id="input" class="hidden">
+                <input id="value" type="text" spellcheck="false">
+            </div>
+        </main>
 
         <script src="index.js"></script>
+        <script>
+            if({{ auth }})
+                showInput();
+            else
+                showCode();
+        </script>
     </body>
 </html>
