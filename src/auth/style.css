@@ -40,8 +40,9 @@ html, body {
 
 body {
 
-    position: relative;
     margin: 0;
+
+    background-color: #1e293b;
 
 }
 
@@ -61,6 +62,8 @@ p {
 
     margin: 0;
     padding: .5rem;
+
+    color: white;
 
 }
 

@@ -42,6 +42,7 @@ export const launch: () => void = async () => {
     }));
 
     window.loadFile(path.join(__dirname, "index.html"));
+    window.removeMenu();
 
     window.once("ready-to-show", () => {
         window.show();

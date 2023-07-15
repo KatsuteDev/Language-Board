@@ -33,7 +33,7 @@ const codes: {[ip: string]: string} = {};
 
 export const launch: () => void = async () => {
     const url: string = `http://${ip()}`;
-    const qr: string = await qrcode.toDataURL(url);
+    const qr: string = await qrcode.toDataURL(url); // todo: remove padding on image
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
         title: "Mobile Board Pairing",
