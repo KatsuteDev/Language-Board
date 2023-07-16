@@ -61,12 +61,13 @@ export const launch: () => void = async () => {
 
     window.loadFile(path.join(__dirname, "index.html"));
 
+    // NOT FIXED SINCE 2020! https://github.com/electron/electron/issues/24893 https://github.com/electron/electron/issues/26726
     // https://github.com/electron/electron/issues/24893#issuecomment-1109262719
     // https://learn.microsoft.com/en-us/windows/win32/menurc/wm-initmenu
     window.hookWindowMessage(0x0116, () => {
         window.setEnabled(false);
         window.setEnabled(true);
-    })
+    });
 
     window.removeMenu();
 

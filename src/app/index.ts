@@ -20,7 +20,7 @@ import { BrowserWindow, ipcMain, screen } from "electron";
 import { activeWindow } from ".."
 
 import * as path from "path";
-import { Point, mouse } from "@nut-tree/nut-js";
+import { Key, Point, clipboard, keyboard, mouse } from "@nut-tree/nut-js";
 
 type Position = {x: number, y: number};
 type Bounds = {top: number, left: number, right: number, bottom: number};
@@ -66,6 +66,7 @@ export const launch: () => void = async () => {
     window.loadFile(path.join(__dirname, "index.html"));
 
     window.removeMenu();
+    window.setEnabled(false);
 
     window.once("ready-to-show", () => {
         setInterval(() => adjustPosition(bounds, window), 50);
@@ -130,8 +131,25 @@ export const input: (v: string) => void = (v: string) => {
 
 export const submit: (v: string) => void = (v: string) => {
     const input: string = v;
+    clipboard
+        .setContent(input)
+        .then(() => keyboard.pressKey(Key.LeftControl, Key.V))
+        .then(() => keyboard.releaseKey(Key.LeftControl, Key.V))
+        .then(() => clipboard.setContent(""));
 }
 
 export const key: (v: string) => void = (k: string) => {
     const key: string = k;
+    if(key === "Enter")
+        keyboard.pressKey(Key.Enter).then(() => keyboard.releaseKey(Key.Enter));
+    else if(key === "Backspace")
+        keyboard.pressKey(Key.Backspace).then(() => keyboard.releaseKey(Key.Backspace));
+    else if(key === "LeftClick")
+        mouse.leftClick();
+    else if(key === "RightClick")
+        mouse.rightClick();
+}
+
+export const pos: (v: {x: number, y: number, mx: number, my: number}) => void = (v: {x: number, y: number, mx: number, my: number}) => {
+    // todo: move mouse
 }

@@ -28,4 +28,4 @@ const content: HTMLElement = document.querySelector("#content")!;
         'h': display.clientHeight,
         'w': display.clientWidth
     });
-})
+});

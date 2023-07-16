@@ -72,9 +72,10 @@ input.onkeydown = (e: KeyboardEvent) => {
             if(e.key === "Enter"){
                 request("GET", `submit?value=${encodeURIComponent(v)}`);
                 input.value = "";
+                send();
             }
         }else if(e.key === "Enter" || e.key === "Backspace"){
-            request("GET", `key?value=${encodeURIComponent(e.key)}`);
+            keypress(e.key);
             input.value = "";
         }
     }
@@ -82,6 +83,43 @@ input.onkeydown = (e: KeyboardEvent) => {
 
 const send: (value?: string) => void = (value?: string) => request("GET", `input?value=${encodeURIComponent(value || (input.value || "").trim())}`);
 
-// lock input
-input.onblur = (e: FocusEvent) => input.focus();
+const keypress: (value: string) => void = (value: string) => request("GET", `key?value=${encodeURIComponent(value)}`);
+
+// mouse
+
+const minput: HTMLDivElement = document.querySelector("#mouseinput")! as HTMLDivElement;
+const mousepad: HTMLDivElement = document.querySelector("#mousepad")! as HTMLDivElement;
+
+let holding: boolean = false;
+
+if("ontouchstart" in window){
+    mousepad.ontouchstart = (e: TouchEvent) => {
+        e.preventDefault();
+        holding = true;
+    };
+
+    mousepad.ontouchend = mousepad.ontouchcancel = (e: TouchEvent) => {
+        e.preventDefault();
+        holding = false;
+    };
+
+    mousepad.ontouchmove = (e: TouchEvent) => {
+        e.preventDefault();
+        if(mousepad === document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY)){
+            if(holding){
+                request("GET", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}&mx=${mousepad.clientWidth}&my=${mousepad.clientHeight}`);
+            }
+        }else
+            holding = false;
+    };
+}else
+    minput.classList.add("hidden");
+
+(document.querySelector("#lmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("LeftClick");
+
+(document.querySelector("#rmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("RightClick");
+
+// input lock
+
+input.onblur = () => input.focus();
 input.focus();

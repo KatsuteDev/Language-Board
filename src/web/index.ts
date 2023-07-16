@@ -26,7 +26,6 @@ import * as auth from "../auth";
 
 const typeHTML : http.OutgoingHttpHeaders = {"Content-Type": "text/html"};
 const typeCSS  : http.OutgoingHttpHeaders = {"Content-Type": "text/css"};
-const typeJSON : http.OutgoingHttpHeaders = {"Content-Type": "application/json"};
 const typeJS   : http.OutgoingHttpHeaders = {"Content-Type": "text/javascript"};
 const typeEvent: http.OutgoingHttpHeaders = {
                                                 "Content-Type": "text/event-stream",
@@ -43,7 +42,9 @@ http.globalAgent.maxSockets = 10;
 let locked: string;
 
 export const launch: () => void = () => {
-    const server: http.Server = http.createServer(handler).listen(7272, "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
+    const server: http.Server = http.createServer(handler);
+
+    server.listen(7272, "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
 }
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
@@ -84,12 +85,19 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
                 clearInterval(interval);
         }, 500);
     }else if(!deny){
-        if(p == "/input"){
+        if(p == "/input")
             app.input(q.value);
-        }else if(p == "/submit")
+        else if(p == "/submit")
             app.submit(q.value);
         else if(p == "/key")
             app.key(q.value);
+        else if(p == "/mouse")
+            app.pos({
+                x: +q.x,
+                y: +q.y,
+                mx: +q.mx,
+                my: +q.my
+            });
     }
 
     res.end();
