@@ -23,6 +23,7 @@ import * as path from "path";
 import { activeWindow } from "..";
 import * as app from "../app";
 import * as auth from "../auth";
+import * as constants from "../constants";
 
 const typeHTML : http.OutgoingHttpHeaders = {"Content-Type": "text/html"};
 const typeCSS  : http.OutgoingHttpHeaders = {"Content-Type": "text/css"};
@@ -53,7 +54,6 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
     const ip: string = req.socket.remoteAddress || "";
     const url: string[] = (req.url || "").split('?');
     const p: string = url[0].startsWith('/') ? url[0] : '/' + url[0];
-    const q: any = url[1] ? parse(url[1]) : undefined;
 
     const s: "pair" | "auth" | "deny" = state(ip);
     const deny: boolean = s === "deny";
@@ -65,6 +65,7 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
 
         res.writeHead(!deny ? 200 : 401, typeHTML);
         return res.end(html
+            .replace("{{ title }}", constants.title)
             .replace("<var:code>", code)
             .replace("{{ state }}", `${s}`));
     }else if(p === "/favicon.ico"){
@@ -85,6 +86,8 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
                 clearInterval(interval);
         }, 500);
     }else if(!deny){
+        const q: any = url[1] ? parse(url[1]) : undefined;
+
         if(p == "/input")
             app.input(q.$value);
         else if(p == "/submit")
@@ -97,7 +100,7 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
                 y: +q.$y
             });
         else if(p == "/mousereset")
-            app.rpos();
+            app.reset();
     }
 
     res.end();

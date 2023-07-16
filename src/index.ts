@@ -32,7 +32,6 @@ export const activeWindow: (browserWindow?: BrowserWindow) => BrowserWindow = (b
     }
     return window;
 };
-export const activeTray: (trayMenu?: Tray) => Tray = (trayMenu?: Tray) => trayMenu ? tray = trayMenu : tray;
 
 export const launch: () => void = async () => {
     if(require("electron-squirrel-startup") || !app.requestSingleInstanceLock()){

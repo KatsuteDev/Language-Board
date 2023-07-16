@@ -27,11 +27,7 @@
 
 }
 
-*, *::before, *::after {
-
-    box-sizing: border-box;
-
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body {
 
@@ -51,12 +47,6 @@ body {
 
     display: flex;
     flex-direction: column;
-
-}
-
-main {
-
-    flex-grow: 1;
 
 }
 
@@ -126,6 +116,8 @@ header {
 
 main {
 
+    flex-grow: 1;
+
     & #login {
 
         flex-grow: 1;
@@ -192,7 +184,7 @@ main {
 
             -webkit-app-region: no-drag;
 
-            font-family: Consolas, monospace;
+            font-family: Menlo, Consolas, "Courier New", monospace;
 
             font-size: 2rem;
 

@@ -18,6 +18,12 @@
 
 window.onbeforeunload = () => true;
 
+// close button
+
+(document.querySelector("#close-button") as HTMLButtonElement).onclick = (e: MouseEvent) => (window as any).api.send("auth:close");
+
+// api
+
 (window as any).api.on("auth:init", (data: {title: string, qr: string, url: string}) => {
     (document.querySelector("#title") as HTMLParagraphElement).innerText = data.title;
     (document.querySelector("#qr") as HTMLImageElement).src = data.qr;
@@ -27,6 +33,8 @@ window.onbeforeunload = () => true;
 (window as any).api.on("auth:show", () => {
     (document.querySelector("#code") as HTMLDivElement).classList.remove("hidden");
 });
+
+// code input
 
 const codeInput: HTMLInputElement = document.querySelector("#value")!;
 const mask: RegExp = /[^a-zA-Z0-9]+/g;
@@ -41,5 +49,3 @@ codeInput.onkeydown = (e: KeyboardEvent) => {
 };
 
 const submit: () => void = () => (window as any).api.send("auth:code", codeInput.value);
-
-(document.querySelector("#close-button") as HTMLButtonElement).onclick = (e: MouseEvent) => (window as any).api.send("auth:close");

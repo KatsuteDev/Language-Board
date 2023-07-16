@@ -1,5 +1,5 @@
 {
-    "name": "mobile-board",
+    "name": "language-board",
     "version": "1.0.0",
     "private": true,
     "main": "dist/index.js",
@@ -24,18 +24,19 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KatsuteDev/Mobile-Board.git"
+        "url": "git+https://github.com/KatsuteDev/Language-Board.git"
     },
     "author": "Katsute",
     "license": "GPL-2.0",
     "bugs": {
-        "url": "https://github.com/KatsuteDev/Mobile-Board/issues"
+        "url": "https://github.com/KatsuteDev/Language-Board/issues"
     },
-    "homepage": "https://github.com/KatsuteDev/Mobile-Board#readme",
+    "homepage": "https://github.com/KatsuteDev/Language-Board#readme",
     "dependencies": {
         "@nut-tree/nut-js": "3.1.2",
         "electron-squirrel-startup": "1.0.0",
-        "qrcode": "1.5.3"
+        "qrcode": "1.5.3",
+        "yaml": "2.3.1"
     },
     "devDependencies": {
         "@electron-forge/cli": "6.2.1",
@@ -44,6 +45,7 @@
         "@electron-forge/maker-zip": "6.2.1",
         "@types/node": "20.4.2",
         "@types/qrcode": "1.5.1",
+        "chromiumly": "2.1.0",
         "electron": "25.3.0",
         "typescript": "5.1.6"
     },
@@ -53,7 +55,7 @@
     "config": {
         "forge": {
             "packagerConfig": {
-                "name": "Mobile Board",
+                "name": "Language Board",
                 "icon": "",
                 "appCopyright": "Copyright © Katsute 2023",
                 "ignore": []
@@ -62,7 +64,7 @@
                 {
                     "name": "@electron-forge/maker-squirrel",
                     "config": {
-                        "name": "Mobile-Board",
+                        "name": "Language-Board",
                         "setupIcon": "",
                         "loadingGif": ""
                     }

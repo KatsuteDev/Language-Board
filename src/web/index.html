@@ -28,23 +28,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 
+        <title>{{ title }}</title>
+
         <link rel="stylesheet" href="index.css">
     </head>
     <body state="{{ state }}">
         <noscript>This application needs javascript to run.</noscript>
 
         <main>
-            <div id="auth">
+            <section id="auth">
                 <h1>Pairing code:</h1>
                 <p id="code"><var:code></p>
-            </div>
+            </section>
 
-            <div id="deny">
+            <section id="deny">
                 <h1>ⓧ</h1>
                 <p>Unauthorized device</p>
-            </div>
+            </section>
 
-            <div id="input">
+            <section id="input">
                 <div>
                     <input id="value" type="text" spellcheck="false">
                     <div id="mouseinput" class="hidden">
@@ -55,7 +57,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                         <div id="mousepad"></div>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
 
         <script src="index.js"></script>

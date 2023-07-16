@@ -29,11 +29,7 @@
 
 }
 
-*, *::before, *::after {
-
-    box-sizing: border-box;
-
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body {
 
@@ -75,7 +71,7 @@ main {
 
     flex-grow: 1;
 
-    > div {
+    > section {
 
         flex-grow: 1;
 
@@ -90,7 +86,7 @@ main {
 
         & #code {
 
-            font-family: Consolas, monospace;
+            font-family: Menlo, Consolas, "Courier New", monospace;
 
             font-size: 4rem;
 

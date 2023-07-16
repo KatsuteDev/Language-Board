@@ -16,31 +16,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { BrowserWindow, ipcMain, screen } from "electron";
-import { activeWindow } from ".."
-
 import * as path from "path";
+
+import { BrowserWindow, ipcMain, screen } from "electron";
 import { Key, Point, clipboard, keyboard, mouse } from "@nut-tree/nut-js";
 
-type Position = {x: number, y: number};
+import { activeWindow } from ".."
+import * as constants from "../constants";
+
 type Bounds = {top: number, left: number, right: number, bottom: number};
-
-const buffer: number = 25; // area around edge of screen
-const cursor: number = 15; // cursor bounds
-
-const rate: number = 1.5; // mouse move multiplier
 
 export const launch: () => void = async () => {
     const wA = screen.getPrimaryDisplay().workAreaSize;
     const bounds: Bounds = {
-        top: buffer,
-        left: buffer,
-        right: wA.width - buffer,
-        bottom: wA.height - buffer
+        top: constants.buffer,
+        left: constants.buffer,
+        right: wA.width - constants.buffer,
+        bottom: wA.height - constants.buffer
     };
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
-        title: "Mobile Board",
+        title: constants.title,
         show: false,
 
         width: 0,
@@ -77,7 +73,7 @@ export const launch: () => void = async () => {
     ipcMain.on("app:size", (event: Electron.IpcMainEvent, ...args: any[]) => {
         const res: {h: number, w: number} = args[0] || {h: 0, w: 0};
 
-        // NOT FIXED SINCE 2019! https://github.com/electron/electron/issues/15560
+        // NOT FIXED SINCE 2018! https://github.com/electron/electron/issues/15560
         // https://github.com/electron/electron/issues/15560#issuecomment-451395078
         window.setMinimumSize(res.w, res.h);
         window.setSize(res.w, res.h, false);
@@ -90,27 +86,27 @@ const adjustPosition: (bounds: Bounds, window: BrowserWindow) => void = (bounds:
         mouse
             .getPosition()
             .then((point: Point) => preferredPosition(point, bounds, window))
-            .then((pos: Position) => {
+            .then((pos: Point) => {
                 const p: number[] = window.getPosition();
                 if(p[0] != pos.x || p[1] != pos.y)
                     window.setPosition(pos.x, pos.y, false);
             });
 }
 
-const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Position = (pt: Point, bound: Bounds, window: BrowserWindow) => {
+const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Point = (pt: Point, bound: Bounds, window: BrowserWindow) => {
     const res: number[] = window.getSize();
 
-    const x: number = pt.x + cursor;
+    const x: number = pt.x + constants.cursor;
     const y: number = pt.y;
     const w: number = res[0] || 0;
     const h: number = res[1] || 0;
 
-    const pos: Position = {x, y};
+    const pos: Point = {x, y};
 
     if(x < bound.left)
         pos.x = bound.left;
     else if(x + w > bound.right)
-        pos.x = Math.min(x - cursor, bound.right) - w;
+        pos.x = Math.min(x - constants.cursor, bound.right) - w;
 
     if(y < bound.top)
         pos.y = bound.top;
@@ -152,17 +148,17 @@ export const key: (v: string) => void = (k: string) => {
         mouse.rightClick();
 }
 
-let last: Position | undefined;
+let last: Point | undefined;
 
 export const pos: (v: {x: number, y: number}) => void = async (v: {x: number, y: number}) => {
     if(last){
-        const m: Position = await mouse.getPosition();
+        const m: Point = await mouse.getPosition();
         await mouse.move([{
-            x: m.x + ((v.x - last.x) * rate),
-            y: m.y + ((v.y - last.y) * rate)
+            x: m.x + ((v.x - last.x) * constants.moveRate),
+            y: m.y + ((v.y - last.y) * constants.moveRate)
         }]);
     }
     last = {x: v.x, y: v.y};
 }
 
-export const rpos: () => void = () => last = undefined;
+export const reset: () => void = () => last = undefined;

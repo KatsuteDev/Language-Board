@@ -16,46 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
- * {
+export const title: string = "Language Board";
 
-    font-family: "Open Sans", Helvetica, Verdana, Arial, sans-serif, "Segoe UI Emoji";
+export const authWidth: number= 275;
+export const authHeight: number = 400;
 
-    outline: none;
+export const cursor: number = 15;
 
-    user-select: none;
-    -webkit-user-select: none;
+export const buffer: number = 20;
 
-}
-
-*, *::before, *::after { box-sizing: border-box; }
-
-html, body {
-
-    margin: 0;
-    overflow: hidden;
-
-}
-
-body {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-}
-
-p {
-
-    direction: rtl;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    font-size: 1.5rem;
-    padding: .25rem .5rem;
-    margin: 0;
-
-    overflow: hidden;
-    max-width: 20rem;
-
-}
+export const moveRate: number = 1.5;

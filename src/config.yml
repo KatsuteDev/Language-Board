@@ -1,0 +1,9 @@
+# Config changes will take affect next launch
+
+port: 7272
+
+screen-buffer: 25
+
+cursor-size: 15
+
+pointer-speed: 1.5

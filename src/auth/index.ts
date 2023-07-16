@@ -25,24 +25,24 @@ import * as path from "path";
 import { activeWindow } from "..";
 import * as app from "../app";
 import * as server from "../web";
-
-const width: number = 275;
-const height: number = 400;
-
-const title: string = "Mobile Board Pairing";
+import * as constants from "../constants";
 
 const codes: {[ip: string]: string} = {};
 
 export const launch: () => void = async () => {
-    const url: string = `${ip()}:7272`;
+    const ip = Object
+        .values(os.networkInterfaces())
+        .map(v => v!.filter((i: os.NetworkInterfaceInfo) => i.family === "IPv4" && !i.internal)[0])[0].address;
+
+    const url: string = `${ip}:7272`;
     const qr: string = await qrcode.toDataURL(`http://${url}`, {margin: 0});
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
-        title: "Mobile Board Pairing",
+        title: `${constants.title} Pairing`,
         show: false,
 
-        width,
-        height,
+        width: constants.authWidth,
+        height: constants.authHeight,
 
         resizable: false,
         minimizable: false,
@@ -72,7 +72,7 @@ export const launch: () => void = async () => {
     window.removeMenu();
 
     window.once("ready-to-show", () => {
-        window.webContents.send("auth:init", {title, qr, url});
+        window.webContents.send("auth:init", {title: `${constants.title} Pairing`, qr, url});
         window.show();
     });
 
@@ -115,10 +115,6 @@ export const code: (ip: string) => string = (ip: string) => {
     while(taken.includes(c));
     return codes[ip] = c;
 }
-
-const ip: () => string = () => Object
-    .values(os.networkInterfaces())
-    .map(v => v!.filter((i: os.NetworkInterfaceInfo) => i.family === "IPv4" && !i.internal)[0])[0].address;
 
 const chars: string = "BCDFGHJKLMNPQRSTVWXZ2456789";
 

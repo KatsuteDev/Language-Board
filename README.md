@@ -1,6 +1,6 @@
-# Mobile Board
+# Language Board
 
-Use a mobile device as a desktop keyboard.
+Use language keyboards from a mobile device as a desktop keyboard and mouse.
 
 ### Contributing
 
@@ -18,4 +18,4 @@ Use a mobile device as a desktop keyboard.
 
 ### License
 
-This software is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Mobile-Board/blob/main/LICENSE).
+This software is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Language-Board/blob/main/LICENSE).

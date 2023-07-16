@@ -39,6 +39,7 @@ const request: (method: string, url: string) => void = (method: string, url: str
 }
 
 // input
+
 const input: HTMLInputElement = document.querySelector("#value")! as HTMLInputElement;
 
 // IME
@@ -85,6 +86,11 @@ const send: (value?: string) => void = (value?: string) => request("GET", `input
 
 const keypress: (value: string) => void = (value: string) => request("GET", `key?value=${encodeURIComponent(value)}`);
 
+// input lock
+
+input.onblur = () => input.focus();
+input.focus();
+
 // mouse
 
 const minput: HTMLDivElement = document.querySelector("#mouseinput")! as HTMLDivElement;
@@ -122,8 +128,3 @@ if("ontouchstart" in window){
 (document.querySelector("#lmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("LeftClick");
 
 (document.querySelector("#rmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("RightClick");
-
-// input lock
-
-input.onblur = () => input.focus();
-input.focus();
