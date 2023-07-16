@@ -16,21 +16,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { BrowserWindow, ipcMain } from "electron";
+import { BrowserWindow, ipcMain, screen } from "electron";
 import { activeWindow } from ".."
 
 import * as path from "path";
+import { Point, mouse } from "@nut-tree/nut-js";
 
-let width: number = 200;
-let height: number = 200;
+type Position = {x: number, y: number};
+type Bounds = {top: number, left: number, right: number, bottom: number};
+
+const buffer: number = 25; // area around edge of screen
+const cursor: number = 15; // cursor bounds
 
 export const launch: () => void = async () => {
+    const wA = screen.getPrimaryDisplay().workAreaSize;
+    const bounds: Bounds = {
+        top: buffer,
+        left: buffer,
+        right: wA.width - buffer,
+        bottom: wA.height - buffer
+    };
+
     const window: BrowserWindow = activeWindow(new BrowserWindow({
         title: "Mobile Board",
         show: false,
 
-        width,
-        height,
+        width: 0,
+        height: 0,
 
         resizable: false,
         minimizable: false,
@@ -46,23 +58,80 @@ export const launch: () => void = async () => {
         skipTaskbar: true,
 
         webPreferences: {
+            devTools: false,
             preload: path.join(__dirname, "../", "interface.js")
         }
     }));
 
     window.loadFile(path.join(__dirname, "index.html"));
 
-    // window.removeMenu();
+    window.removeMenu();
 
     window.once("ready-to-show", () => {
+        setInterval(() => adjustPosition(bounds, window), 50);
+    });
+
+    ipcMain.on("app:size", (event: Electron.IpcMainEvent, ...args: any[]) => {
+        const res: {h: number, w: number} = args[0] || {h: 0, w: 0};
+
+        // NOT FIXED SINCE 2019! https://github.com/electron/electron/issues/15560
+        // https://github.com/electron/electron/issues/15560#issuecomment-451395078
+        window.setMinimumSize(res.w, res.h);
+        window.setSize(res.w, res.h, false);
+        adjustPosition(bounds, window);
+    });
+}
+
+const adjustPosition: (bounds: Bounds, window: BrowserWindow) => void = (bounds: Bounds, window: BrowserWindow) => {
+    if(!window.isDestroyed() && window.isVisible())
+        mouse
+            .getPosition()
+            .then((point: Point) => preferredPosition(point, bounds, window))
+            .then((pos: Position) => {
+                const p: number[] = window.getPosition();
+                if(p[0] != pos.x || p[1] != pos.y)
+                    window.setPosition(pos.x, pos.y, false);
+            });
+}
+
+const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Position = (pt: Point, bound: Bounds, window: BrowserWindow) => {
+    const res: number[] = window.getSize();
+
+    const x: number = pt.x + cursor;
+    const y: number = pt.y;
+    const w: number = res[0] || 0;
+    const h: number = res[1] || 0;
+
+    const pos: Position = {x, y};
+
+    if(x < bound.left)
+        pos.x = bound.left;
+    else if(x + w > bound.right)
+        pos.x = Math.min(x - cursor, bound.right) - w;
+
+    if(y < bound.top)
+        pos.y = bound.top;
+    else if(y + h > bound.bottom)
+        pos.y = Math.min(y, bound.bottom) - h;
+
+    return pos;
+}
+
+export const input: (v: string) => void = (v: string) => {
+    const input: string = v;
+    const window: BrowserWindow = activeWindow();
+    window.webContents.send("app:input", input);
+
+    if(input.length == 0)
+        window.hide();
+    else if(!window.isVisible())
         window.show();
-    });
+}
 
-    ipcMain.on("app:input", (event: Electron.IpcMainEvent, ...args: any[]) => {
+export const submit: (v: string) => void = (v: string) => {
+    const input: string = v;
+}
 
-    });
-
-    ipcMain.on("app:submit", (event: Electron.IpcMainEvent, ...args: any[]) => {
-
-    });
+export const key: (v: string) => void = (k: string) => {
+    const key: string = k;
 }

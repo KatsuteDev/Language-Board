@@ -33,9 +33,6 @@ const title: string = "Mobile Board Pairing";
 
 const codes: {[ip: string]: string} = {};
 
-// https://learn.microsoft.com/en-us/windows/win32/menurc/wm-initmenu
-const WM_INITMENU: number = 0x0116;
-
 export const launch: () => void = async () => {
     const url: string = `${ip()}:7272`;
     const qr: string = await qrcode.toDataURL(`http://${url}`, {margin: 0});
@@ -57,6 +54,7 @@ export const launch: () => void = async () => {
         titleBarStyle: "hidden",
 
         webPreferences: {
+            devTools: false,
             preload: path.join(__dirname, "../", "interface.js")
         }
     }));
@@ -64,12 +62,13 @@ export const launch: () => void = async () => {
     window.loadFile(path.join(__dirname, "index.html"));
 
     // https://github.com/electron/electron/issues/24893#issuecomment-1109262719
-    window.hookWindowMessage(WM_INITMENU, () => {
+    // https://learn.microsoft.com/en-us/windows/win32/menurc/wm-initmenu
+    window.hookWindowMessage(0x0116, () => {
         window.setEnabled(false);
         window.setEnabled(true);
     })
 
-    // window.removeMenu();
+    window.removeMenu();
 
     window.once("ready-to-show", () => {
         window.webContents.send("auth:init", {title, qr, url});
@@ -97,6 +96,7 @@ export const launch: () => void = async () => {
             ipcMain.removeAllListeners("auth:init");
             ipcMain.removeAllListeners("auth:show");
             ipcMain.removeAllListeners("auth:code");
+            ipcMain.removeAllListeners("auth:close");
             app.launch();
         }
     });

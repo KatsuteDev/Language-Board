@@ -21,6 +21,7 @@ import * as http from "http";
 import * as path from "path";
 
 import { activeWindow } from "..";
+import * as app from "../app";
 import * as auth from "../auth";
 
 const typeHTML : http.OutgoingHttpHeaders = {"Content-Type": "text/html"};
@@ -42,7 +43,7 @@ http.globalAgent.maxSockets = 10;
 let locked: string;
 
 export const launch: () => void = () => {
-    const server: http.Server = http.createServer(handler).listen(7272, "0.0.0.0"); // <- enforce IPv4
+    const server: http.Server = http.createServer(handler).listen(7272, "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
 }
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
@@ -53,14 +54,15 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
     const p: string = url[0].startsWith('/') ? url[0] : '/' + url[0];
     const q: any = url[1] ? parse(url[1]) : undefined;
 
+    const s: "pair" | "auth" | "deny" = state(ip);
+    const deny: boolean = s === "deny";
+
     if(p === '/'){
         activeWindow().webContents.send("auth:show");
 
         const code: string = auth.code(ip);
 
-        const s: "pair" | "auth" | "deny" = state(ip);
-
-        res.writeHead(s !== "deny" ? 200 : 401, typeHTML);
+        res.writeHead(!deny ? 200 : 401, typeHTML);
         return res.end(html
             .replace("<var:code>", code)
             .replace("{{ state }}", `${s}`));
@@ -81,6 +83,13 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
             else
                 clearInterval(interval);
         }, 500);
+    }else if(!deny){
+        if(p == "/input"){
+            app.input(q.value);
+        }else if(p == "/submit")
+            app.submit(q.value);
+        else if(p == "/key")
+            app.key(q.value);
     }
 
     res.end();

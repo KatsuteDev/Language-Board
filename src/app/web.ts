@@ -17,3 +17,15 @@
  */
 
 window.onbeforeunload = () => true;
+
+const display: HTMLElement = document.querySelector("#display")!;
+const content: HTMLElement = document.querySelector("#content")!;
+
+(window as any).api.on("app:input", (data: string) => {
+    content.innerText = data;
+
+    (window as any).api.send("app:size", {
+        'h': display.clientHeight,
+        'w': display.clientWidth
+    });
+})
