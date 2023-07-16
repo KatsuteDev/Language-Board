@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
         <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
         <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
@@ -34,25 +34,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
         <noscript>This application needs javascript to run.</noscript>
 
         <main>
-            <div id="auth" class="hidden">
+            <div id="auth">
                 <h1>Pairing code:</h1>
                 <p id="code"><var:code></p>
             </div>
 
-            <div id="input" class="hidden">
-                <div id="mouseinput" class="hidden">
-                    <div id="mousebtns">
-                        <button id="lmb"></button>
-                        <button id="rmb"></button>
-                    </div>
-                    <div id="mousepad"></div>
-                </div>
-                <input id="value" type="text" spellcheck="false">
-            </div>
-
-            <div id="deny" class="hidden">
+            <div id="deny">
                 <h1>ⓧ</h1>
                 <p>Unauthorized device</p>
+            </div>
+
+            <div id="input">
+                <div>
+                    <input id="value" type="text" spellcheck="false">
+                    <div id="mouseinput" class="hidden">
+                        <div id="mousebtns">
+                            <button id="lmb"></button>
+                            <button id="rmb"></button>
+                        </div>
+                        <div id="mousepad"></div>
+                    </div>
+                </div>
             </div>
         </main>
 

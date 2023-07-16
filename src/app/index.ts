@@ -28,6 +28,8 @@ type Bounds = {top: number, left: number, right: number, bottom: number};
 const buffer: number = 25; // area around edge of screen
 const cursor: number = 15; // cursor bounds
 
+const rate: number = 1.5; // mouse move multiplier
+
 export const launch: () => void = async () => {
     const wA = screen.getPrimaryDisplay().workAreaSize;
     const bounds: Bounds = {
@@ -150,6 +152,17 @@ export const key: (v: string) => void = (k: string) => {
         mouse.rightClick();
 }
 
-export const pos: (v: {x: number, y: number, mx: number, my: number}) => void = (v: {x: number, y: number, mx: number, my: number}) => {
-    // todo: move mouse
+let last: Position | undefined;
+
+export const pos: (v: {x: number, y: number}) => void = async (v: {x: number, y: number}) => {
+    if(last){
+        const m: Position = await mouse.getPosition();
+        await mouse.move([{
+            x: m.x + ((v.x - last.x) * rate),
+            y: m.y + ((v.y - last.y) * rate)
+        }]);
+    }
+    last = {x: v.x, y: v.y};
 }
+
+export const rpos: () => void = () => last = undefined;

@@ -25,6 +25,8 @@
     user-select: none;
     -webkit-user-select: none;
 
+    touch-action: manipulation;
+
 }
 
 *, *::before, *::after {
@@ -47,116 +49,58 @@ body:not([state="deny"]){ background-color: #3b82f6; }
 
 body[state="deny"]{ background-color: #f87171; }
 
-body, main, div {
+body, main {
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 
 }
 
 h1, p {
 
     margin: 0;
-    padding: .5rem;
+    padding: .5rem 0;
 
 }
 
-body[state="pair"] :is(#input, #deny){ display: none; }
-body[state="auth"] :is(#auth, #deny) { display: none; }
+body[state="pair"] :is(#deny, #input){ display: none; }
 body[state="deny"] :is(#auth, #input){ display: none; }
+body[state="auth"] :is(#deny, #auth) { display: none; }
 
 main {
 
     color: white;
 
-    & #code {
+    padding: 1rem;
 
-        font-family: Consolas, monospace;
+    flex-grow: 1;
 
-        font-size: 4rem;
+    > div {
 
-        text-indent: 1rem;
-        letter-spacing: 1rem;
-
-        text-align: center;
-        text-transform: uppercase;
-
-    }
-
-    & #mouseinput {
+        flex-grow: 1;
 
         display: flex;
         flex-direction: column;
-
-        width: 100%;
-
-        & #mousebtns {
-
-            display: flex;
-            flex-direction: row;
-
-            width: 100%;
-
-            height: 3rem;
-
-            & button {
-
-                border: none;
-
-                padding: 0;
-
-                background-color: white;
-
-                width: 100%;
-                height: 100%;
-
-            }
-
-            & #lmb {
-
-                border-right: 1px solid black;
-                border-bottom: 1px solid black;
-
-            }
-
-            & #rmb {
-
-                border-left: 1px solid black;
-                border-bottom: 1px solid black;
-
-            }
-
-        }
-
-        & #mousepad {
-
-            background-color: white;
-
-            width: 100%;
-
-            height: 0;
-            padding-bottom: 100%;
-
-            margin-bottom: 2rem;
-
-        }
+        justify-content: center;
+        align-items: center;
 
     }
 
-    & #value {
+    & #auth {
 
-        border: 0;
+        & #code {
 
-        font-size: 1.5rem;
-        text-align: right;
-        text-overflow: ellipsis;
+            font-family: Consolas, monospace;
 
-        overflow: hidden;
-        white-space: nowrap;
+            font-size: 4rem;
 
-        padding: .5rem;
+            text-indent: 1rem;
+            letter-spacing: 1rem;
+
+            text-align: center;
+            text-transform: uppercase;
+
+        }
 
     }
 
@@ -172,6 +116,103 @@ main {
         & p {
 
             font-size: 1.5rem;
+
+        }
+
+    }
+
+    & #input {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        > div {
+
+            flex-grow: 1;
+
+            display: flex;
+            flex-direction: column;
+
+            width: 100%;
+            max-width: 30rem;
+
+        }
+
+        & #mouseinput {
+
+            display: flex;
+            flex-direction: column;
+
+            width: 100%;
+
+            & #mousebtns {
+
+                display: flex;
+                flex-direction: row;
+
+                width: 100%;
+
+                height: 4rem;
+
+                & button {
+
+                    border: none;
+
+                    padding: 0;
+
+                    background-color: white;
+
+                    width: 100%;
+                    height: 100%;
+
+                }
+
+                & #lmb {
+
+                    border-right: 1px solid black;
+                    border-bottom: 1px solid black;
+
+                }
+
+                & #rmb {
+
+                    border-bottom: 1px solid black;
+
+                }
+
+            }
+
+            & #mousepad {
+
+                background-color: white;
+
+                width: 100%;
+                padding-bottom: 100%;
+
+            }
+
+        }
+
+        & #mouseinput.hidden {
+
+            display: none;
+
+        }
+
+        & #value {
+
+            border: 0;
+
+            font-size: 1.5rem;
+            text-align: right;
+            text-overflow: ellipsis;
+
+            overflow: hidden;
+            white-space: nowrap;
+
+            padding: .5rem;
+            margin-bottom: 1rem;
 
         }
 

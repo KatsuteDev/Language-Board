@@ -93,6 +93,8 @@ const mousepad: HTMLDivElement = document.querySelector("#mousepad")! as HTMLDiv
 let holding: boolean = false;
 
 if("ontouchstart" in window){
+    minput.classList.remove("hidden");
+
     mousepad.ontouchstart = (e: TouchEvent) => {
         e.preventDefault();
         holding = true;
@@ -101,19 +103,21 @@ if("ontouchstart" in window){
     mousepad.ontouchend = mousepad.ontouchcancel = (e: TouchEvent) => {
         e.preventDefault();
         holding = false;
+        request("GET", "mousereset");
     };
 
     mousepad.ontouchmove = (e: TouchEvent) => {
         e.preventDefault();
         if(mousepad === document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY)){
             if(holding){
-                request("GET", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}&mx=${mousepad.clientWidth}&my=${mousepad.clientHeight}`);
+                request("GET", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}`);
             }
-        }else
+        }else{
             holding = false;
+            request("GET", "mousereset");
+        }
     };
-}else
-    minput.classList.add("hidden");
+}
 
 (document.querySelector("#lmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("LeftClick");
 

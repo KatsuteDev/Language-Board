@@ -86,18 +86,18 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
         }, 500);
     }else if(!deny){
         if(p == "/input")
-            app.input(q.value);
+            app.input(q.$value);
         else if(p == "/submit")
-            app.submit(q.value);
+            app.submit(q.$value);
         else if(p == "/key")
-            app.key(q.value);
+            app.key(q.$value);
         else if(p == "/mouse")
             app.pos({
-                x: +q.x,
-                y: +q.y,
-                mx: +q.mx,
-                my: +q.my
+                x: +q.$x,
+                y: +q.$y
             });
+        else if(p == "/mousereset")
+            app.rpos();
     }
 
     res.end();
@@ -111,7 +111,7 @@ const parse: (raw: string) => {[k: string]: string | undefined} = (raw: string) 
     for(const pair of pairs){
         if(pair.includes('=')){
             const kv: string[] = pair.split('=');
-            obj[decodeURIComponent(kv[0])] = kv.length == 2 ? decodeURIComponent(kv[1]) : undefined;
+            obj['$' + decodeURIComponent(kv[0])] = kv.length == 2 ? decodeURIComponent(kv[1]) : undefined;
         }
     }
     return obj;
