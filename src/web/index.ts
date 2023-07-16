@@ -41,11 +41,11 @@ http.globalAgent.maxSockets = 10;
 
 let locked: string;
 
-const title: string = "Mobile Board";
-
 export const launch: () => void = () => {
     const server: http.Server = http.createServer(handler).listen(7272, "0.0.0.0"); // <- enforce IPv4
 }
+
+const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
 
 export const handler: http.RequestListener = (req: http.IncomingMessage, res: http.ServerResponse) => {
     const ip: string = req.socket.remoteAddress || "";
@@ -53,20 +53,17 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
     const p: string = url[0].startsWith('/') ? url[0] : '/' + url[0];
     const q: any = url[1] ? parse(url[1]) : undefined;
 
-    if(locked && ip !== locked){
-        res.writeHead(401, typeHTML);
-        return res.end("connection denied by server"); // todo: proper rejection screen
-    }
-
     if(p === '/'){
         activeWindow().webContents.send("auth:show");
 
         const code: string = auth.code(ip);
 
-        res.writeHead(200, typeHTML);
+        const s: "pair" | "auth" | "deny" = state(ip);
+
+        res.writeHead(s !== "deny" ? 200 : 401, typeHTML);
         return res.end(html
-            .replace("{{ code }}", code)
-            .replace("{{ auth }}", `${!!locked}`));
+            .replace("<var:code>", code)
+            .replace("{{ state }}", `${s}`));
     }else if(p === "/favicon.ico"){
 
     }else if(p === "/index.css"){
@@ -74,16 +71,16 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
         return res.end(css);
     }else if(p === "/index.js"){
         res.writeHead(200, typeJS);
-        return res.end(js.replace(/{{ title }}/gm, title));
-    }else if(p == "/authenticated"){
+        return res.end(js);
+    }else if(p == "/state"){
         let interval: NodeJS.Timeout;
         res.writeHead(200, typeEvent);
         return interval = setInterval(() => {
             if(res)
-                res.write(`retry: ${100}\nid: ${Date.now()}\ndata: ${!!locked}\n\n`);
+                res.write(`retry: 1000\nid: ${Date.now()}\ndata: ${state(ip)}\n\n`);
             else
                 clearInterval(interval);
-        })
+        }, 500);
     }
 
     res.end();

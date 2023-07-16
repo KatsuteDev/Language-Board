@@ -26,22 +26,32 @@ let height: number = 200;
 
 export const launch: () => void = async () => {
     const window: BrowserWindow = activeWindow(new BrowserWindow({
-        title: "Mobile Board Pairing",
+        title: "Mobile Board",
         show: false,
 
         width,
         height,
 
         resizable: false,
+        minimizable: false,
         maximizable: false,
-
         fullscreenable: false,
+
+        frame: false,
+        hasShadow: false,
+        titleBarStyle: "hidden",
+
+        alwaysOnTop: true,
+        focusable: false,
+        skipTaskbar: true,
+
         webPreferences: {
             preload: path.join(__dirname, "../", "interface.js")
         }
     }));
 
     window.loadFile(path.join(__dirname, "index.html"));
+
     // window.removeMenu();
 
     window.once("ready-to-show", () => {

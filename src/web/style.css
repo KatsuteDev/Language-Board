@@ -18,9 +18,12 @@
 
  * {
 
-    font-family: Open Sans, Helvetica, Verdana, Arial, sans-serif;
+    font-family: "Open Sans", Helvetica, Verdana, Arial, sans-serif, "Segoe UI Emoji";
 
     outline: none;
+
+    user-select: none;
+    -webkit-user-select: none;
 
 }
 
@@ -32,19 +35,17 @@
 
 html, body {
 
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     overflow:hidden;
 
 }
 
-body {
+body { margin: 0; }
 
-    margin: 0;
+body:not([state="deny"]){ background-color: #3b82f6; }
 
-    background-color: #3b82f6;
-
-}
+body[state="deny"]{ background-color: #f87171; }
 
 body, main, div {
 
@@ -57,39 +58,63 @@ body, main, div {
 
 h1, p {
 
-    user-select: none;
-    -webkit-user-select: none;
-
-    color: white;
-
     margin: 0;
     padding: .5rem;
 
 }
 
-#code {
+body[state="pair"] :is(#value, #deny){ display: none; }
+body[state="auth"] :is(#auth, #deny) { display: none; }
+body[state="deny"] :is(#auth, #value){ display: none; }
 
-    font-family: "Consolas" monospace;
+main {
 
-    font-size: 4rem;
+    color: white;
 
-    text-indent: 1rem;
-    letter-spacing: 1rem;
+    & #code {
 
-    text-align: center;
-    text-transform: uppercase;
+        font-family: Consolas, monospace;
 
-}
+        font-size: 4rem;
 
-#value {
+        text-indent: 1rem;
+        letter-spacing: 1rem;
 
-    font-size: 1.5rem;
-    text-align: right;
+        text-align: center;
+        text-transform: uppercase;
 
-}
+    }
 
-.hidden {
+    & #value {
 
-    display: none;
+        border: 0;
+
+        font-size: 1.5rem;
+        text-align: right;
+        text-overflow: ellipsis;
+
+        overflow: hidden;
+        white-space: nowrap;
+
+        padding: .5rem;
+
+    }
+
+    & #deny {
+
+        & h1 {
+
+            font-size: 10rem;
+            font-weight: 100;
+
+        }
+
+        & p {
+
+            font-size: 1.5rem;
+
+        }
+
+    }
 
 }

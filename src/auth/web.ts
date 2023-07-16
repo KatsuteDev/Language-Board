@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+window.onbeforeunload = () => true;
+
 (window as any).api.on("auth:init", (data: {title: string, qr: string, url: string}) => {
     (document.querySelector("#title") as HTMLParagraphElement).innerText = data.title;
     (document.querySelector("#qr") as HTMLImageElement).src = data.qr;

@@ -16,25 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-const stream: EventSource = new EventSource("authenticated");
+const body: HTMLBodyElement = document.querySelector("body")!;
 
-const auth: HTMLDivElement = document.querySelector("#auth")!;
-const input: HTMLDivElement = document.querySelector("#input")!;
+const stream: EventSource = new EventSource("state");
 
 stream.onmessage = (e: MessageEvent) => {
-    if(e.data === "true"){
-        showInput();
-        stream.close();
+    switch(e.data){
+        case "auth":
+        case "deny":
+            stream.close();
+        default:
+            body.setAttribute("state", e.data);
     }
-}
-
-const showCode: () => void = () => {
-    document.title = "{{ title }} Pairing";
-    auth.classList.remove("hidden");
-}
-
-const showInput: () => void = () => {
-    document.title = "{{ title }}";
-    auth.classList.add("hidden");
-    input.classList.remove("hidden");
 }
