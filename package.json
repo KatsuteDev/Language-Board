@@ -1,5 +1,6 @@
 {
     "name": "language-board",
+    "description": "Use language keyboards from a mobile device as a desktop keyboard and mouse.",
     "version": "1.0.0",
     "private": true,
     "main": "dist/index.js",
@@ -47,8 +48,6 @@
         "@types/node": "20.4.2",
         "@types/qrcode": "1.5.1",
         "electron": "25.3.0",
-        "github-markdown-css": "5.2.0",
-        "showdown": "2.1.0",
         "typescript": "5.1.6"
     },
     "overrides": {
@@ -60,22 +59,33 @@
                 "name": "Language Board",
                 "icon": "",
                 "appCopyright": "Copyright © Katsute 2023",
-                "ignore": []
+                "ignore": [
+                    "^/\\.devcontainer$",
+                    "^/\\.github$",
+                    "^/src$",
+                    "^/\\.gitignore$",
+                    "^/\\w*\\.(js|png|gif)$",
+                    "^/tsconfig.json$"
+                ]
             },
             "makers": [
                 {
                     "name": "@electron-forge/maker-squirrel",
                     "config": {
                         "name": "Language-Board",
-                        "setupIcon": "",
-                        "loadingGif": ""
+                        "copyright": "Copyright © Katsute 2023"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-wix",
+                    "config": {
+                        "name": "Language Board",
+                        "icon": "",
+                        "manufacturer": "Katsute"
                     }
                 },
                 {
                     "name": "@electron-forge/maker-zip"
-                },
-                {
-                    "name": "@electron-forge/maker-wix"
                 }
             ]
         }

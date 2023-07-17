@@ -43,27 +43,24 @@ const request: (method: string, url: string) => void = (method: string, url: str
 const input: HTMLInputElement = document.querySelector("#value")! as HTMLInputElement;
 
 // IME
-
-let before: string = ""; // content excluding in-progress IME
 let isIME: boolean = false;
 
 input.addEventListener("compositionstart", (e: CompositionEvent) => {
     isIME = true;
-    before = input.value || "";
 });
 
 input.addEventListener("compositionend", (e: CompositionEvent) => {
     isIME = false;
-    send();
+    send(input.value + e.data);
 });
 
 input.addEventListener("compositionupdate", (e: CompositionEvent) => {
-    send(before + e.data);
+    send(input.value + e.data);
 });
 
 // submit
 
-input.oninput = (e: Event) => !isIME && send();
+input.oninput = (e: Event) => send();
 
 input.onkeydown = (e: KeyboardEvent) => {
     if(!isIME){

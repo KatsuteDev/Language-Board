@@ -54,7 +54,7 @@ export const launch: (url: string) => void = (url: string) => {
             type: "normal",
             click: () => activeWindow().destroy()
         }
-    ]))
+    ]));
     tray.setToolTip(constants.title);
     tray.on("click", () => tray.popUpContextMenu());
 }

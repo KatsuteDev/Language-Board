@@ -18,7 +18,6 @@
 
 const fs = require("fs");
 const path = require("path");
-const showdown = require("showdown");
 
 const minify = (str) =>
     str .replace(/<!--.*-->/gs, '')          // <!-- comments
@@ -45,23 +44,6 @@ apply(
     file => fs.copyFileSync(file, path.join(__dirname, "dist", file.substring(path.join(__dirname, "src").length))),
     file => file.endsWith(".html") || file.endsWith(".css")
 );
-
-// manual
-
-const converter = new showdown.Converter({
-    ghCompatibleHeaderId: true,
-    openLinksInNewWindow: true,
-    completeHTMLDocument: true
-});
-
-fs.copyFileSync(path.join(__dirname, "node_modules", "github-markdown-css", "github-markdown.css"), path.join(__dirname, "dist", "github.css"))
-
-fs.writeFileSync(
-    path.join(__dirname, "dist", "Manual.html"),
-    converter.makeHtml(fs.readFileSync(path.join(__dirname, "README.md"), "utf-8"))
-        .replace("</head>", `<link rel="stylesheet" href="github.css"><title>Language Board Manual</title></head>`)
-        .replace("<body>", `<body class="markdown-body" style="padding: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">`),
-        "utf-8");
 
 // minify
 
