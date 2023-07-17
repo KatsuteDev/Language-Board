@@ -21,8 +21,8 @@ export const title: string = "Language Board";
 export const authWidth: number= 275;
 export const authHeight: number = 400;
 
-export const cursor: number = 15;
+export const screenBuffer: number = 20;
 
-export const buffer: number = 20;
+export const cursorSize: number = 15;
 
-export const moveRate: number = 1.5;
+export const pointerSpeed: number = 1.5;

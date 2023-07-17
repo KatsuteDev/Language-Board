@@ -29,10 +29,10 @@ type Bounds = {top: number, left: number, right: number, bottom: number};
 export const launch: () => void = async () => {
     const wA = screen.getPrimaryDisplay().workAreaSize;
     const bounds: Bounds = {
-        top: constants.buffer,
-        left: constants.buffer,
-        right: wA.width - constants.buffer,
-        bottom: wA.height - constants.buffer
+        top: constants.screenBuffer,
+        left: constants.screenBuffer,
+        right: wA.width - constants.screenBuffer,
+        bottom: wA.height - constants.screenBuffer
     };
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
@@ -96,7 +96,7 @@ const adjustPosition: (bounds: Bounds, window: BrowserWindow) => void = (bounds:
 const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Point = (pt: Point, bound: Bounds, window: BrowserWindow) => {
     const res: number[] = window.getSize();
 
-    const x: number = pt.x + constants.cursor;
+    const x: number = pt.x + constants.cursorSize;
     const y: number = pt.y;
     const w: number = res[0] || 0;
     const h: number = res[1] || 0;
@@ -106,7 +106,7 @@ const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Po
     if(x < bound.left)
         pos.x = bound.left;
     else if(x + w > bound.right)
-        pos.x = Math.min(x - constants.cursor, bound.right) - w;
+        pos.x = Math.min(x - constants.cursorSize, bound.right) - w;
 
     if(y < bound.top)
         pos.y = bound.top;
@@ -154,8 +154,8 @@ export const pos: (v: {x: number, y: number}) => void = async (v: {x: number, y:
     if(last){
         const m: Point = await mouse.getPosition();
         await mouse.move([{
-            x: m.x + ((v.x - last.x) * constants.moveRate),
-            y: m.y + ((v.y - last.y) * constants.moveRate)
+            x: m.x + ((v.x - last.x) * constants.pointerSpeed),
+            y: m.y + ((v.y - last.y) * constants.pointerSpeed)
         }]);
     }
     last = {x: v.x, y: v.y};

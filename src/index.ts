@@ -16,13 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { app, BrowserWindow, Tray } from "electron";
+import { app, BrowserWindow } from "electron";
+
 import * as auth from "./auth/index";
+import { activeTray } from "./tray";
 
 export const osx: boolean = process.platform == "darwin";
 
 let window: BrowserWindow;
-let tray: Tray;
 
 export const activeWindow: (browserWindow?: BrowserWindow) => BrowserWindow = (browserWindow?: BrowserWindow) => {
     if(browserWindow && browserWindow !== window){
@@ -48,11 +49,13 @@ export const launch: () => void = async () => {
         })
         .on("window-all-closed", () => {
             if(!osx){
-                tray && tray.destroy();
+                activeTray() && activeTray().destroy();
                 app.quit();
                 process.exit(0);
             }
         });
+
+    // todo: read and parse config or write def
 
     auth.launch();
 }

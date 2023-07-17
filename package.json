@@ -11,6 +11,7 @@
         "// -- build -- //": "",
         "build:js": "node build.js",
         "build:ts": "tsc --outDir dist --target es2022 --module commonjs --moduleResolution nodenext --strict --alwaysStrict --removeComments --pretty",
+        "build:md": "",
         "build": "npm run build:ts && npm run build:js",
         "prepare": "npm run clean && npm run build",
         "// -- run -- //": "",
@@ -45,8 +46,9 @@
         "@electron-forge/maker-zip": "6.2.1",
         "@types/node": "20.4.2",
         "@types/qrcode": "1.5.1",
-        "chromiumly": "2.1.0",
         "electron": "25.3.0",
+        "github-markdown-css": "5.2.0",
+        "showdown": "2.1.0",
         "typescript": "5.1.6"
     },
     "overrides": {

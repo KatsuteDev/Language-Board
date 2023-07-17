@@ -24,6 +24,7 @@ import * as path from "path";
 
 import { activeWindow } from "..";
 import * as app from "../app";
+import * as tray from "../tray";
 import * as server from "../web";
 import * as constants from "../constants";
 
@@ -103,6 +104,7 @@ export const launch: () => void = async () => {
     });
 
     server.launch();
+    tray.launch(url);
 }
 
 export const code: (ip: string) => string = (ip: string) => {

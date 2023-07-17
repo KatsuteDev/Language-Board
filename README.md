@@ -1,6 +1,36 @@
-# Language Board
+<div align="center">
+    <h3>Language Board</h3>
+</div>
 
 Use language keyboards from a mobile device as a desktop keyboard and mouse.
+
+## Installation
+
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+## Features
+
+##### Keyboard Typing
+
+##### Key Presses
+
+##### Virtual Mouse
+
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+## Configuration
+
+##### Port
+
+##### Screen Buffer
+
+##### Cursor
+
+##### Pointer Speed
+
+<div align="right"><a href="#top"><code>▲</code></a></div>
+
+<hr>
 
 ### Contributing
 
