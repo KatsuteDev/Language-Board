@@ -19,9 +19,10 @@
 import * as path from "path";
 
 import { Menu, Tray } from "electron"
+import { exec }from "child_process";
 
-import * as constants from "./constants";
 import { activeWindow } from ".";
+import * as constants from "./constants";
 
 let tray: Tray;
 
@@ -46,6 +47,7 @@ export const launch: (url: string) => void = (url: string) => {
         {
             label: "Settings",
             type: "normal",
+            click: () => exec(`explorer.exe /select,"${constants.config}"`)
         },
         {
             label: "Quit",

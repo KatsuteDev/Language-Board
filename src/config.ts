@@ -17,15 +17,19 @@
  */
 
 import * as fs from "fs";
-import * as path from "path";
+import * as yaml from "yaml";
 
-export const title: string = "Language Board";
+import * as constants from "./constants";
 
-export const config: string = fs.existsSync(path.join(__dirname, "../", "src"))
-    ? path.join(__dirname, "../", "../", "config.yml")
-    : path.join(__dirname, "../", "../", "../", "../", "config.yml");
+let def: any;
+let cfg: any;
 
-export const defConfig: string = path.join(__dirname, "config.yml");
+export const get: (key: string) => any = (key: string) => cfg[key] || def[key];
 
-export const authWidth: number= 275;
-export const authHeight: number = 400;
+export const launch: () => void = () => {
+    if(!fs.existsSync(constants.config))
+        fs.copyFileSync(constants.defConfig, constants.config);
+
+    def = yaml.parse(fs.readFileSync(constants.defConfig, "utf-8"));
+    cfg = yaml.parse(fs.readFileSync(constants.config, "utf-8"));
+}

@@ -23,17 +23,24 @@ import { Key, Point, clipboard, keyboard, mouse } from "@nut-tree/nut-js";
 
 import { activeWindow } from ".."
 import * as constants from "../constants";
+import { get } from "../config";
 
 type Bounds = {top: number, left: number, right: number, bottom: number};
 
+let cursor: number;
+let speed: number;
+
 export const launch: () => void = async () => {
     const wA = screen.getPrimaryDisplay().workAreaSize;
+    const buf: number = +get("screen-buffer");
     const bounds: Bounds = {
-        top: constants.screenBuffer,
-        left: constants.screenBuffer,
-        right: wA.width - constants.screenBuffer,
-        bottom: wA.height - constants.screenBuffer
+        top: buf,
+        left: buf,
+        right: wA.width - buf,
+        bottom: wA.height - buf
     };
+    cursor = +get("cursor-size");
+    speed  = +get("pointer-speed");
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
         title: constants.title,
@@ -96,7 +103,7 @@ const adjustPosition: (bounds: Bounds, window: BrowserWindow) => void = (bounds:
 const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Point = (pt: Point, bound: Bounds, window: BrowserWindow) => {
     const res: number[] = window.getSize();
 
-    const x: number = pt.x + constants.cursorSize;
+    const x: number = pt.x + cursor!;
     const y: number = pt.y;
     const w: number = res[0] || 0;
     const h: number = res[1] || 0;
@@ -106,7 +113,7 @@ const preferredPosition: (pt: Point, bound: Bounds, window: BrowserWindow) => Po
     if(x < bound.left)
         pos.x = bound.left;
     else if(x + w > bound.right)
-        pos.x = Math.min(x - constants.cursorSize, bound.right) - w;
+        pos.x = Math.min(x - cursor!, bound.right) - w;
 
     if(y < bound.top)
         pos.y = bound.top;
@@ -154,8 +161,8 @@ export const pos: (v: {x: number, y: number}) => void = async (v: {x: number, y:
     if(last){
         const m: Point = await mouse.getPosition();
         await mouse.move([{
-            x: m.x + ((v.x - last.x) * constants.pointerSpeed),
-            y: m.y + ((v.y - last.y) * constants.pointerSpeed)
+            x: m.x + ((v.x - last.x) * speed!),
+            y: m.y + ((v.y - last.y) * speed!)
         }]);
     }
     last = {x: v.x, y: v.y};

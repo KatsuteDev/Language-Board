@@ -23,6 +23,7 @@ import * as os from "os";
 import * as path from "path";
 
 import { activeWindow } from "..";
+import { get } from "../config";
 import * as app from "../app";
 import * as tray from "../tray";
 import * as server from "../web";
@@ -35,7 +36,7 @@ export const launch: () => void = async () => {
         .values(os.networkInterfaces())
         .map(v => v!.filter((i: os.NetworkInterfaceInfo) => i.family === "IPv4" && !i.internal)[0])[0].address;
 
-    const url: string = `${ip}:7272`;
+    const url: string = `${ip}:${get("port")}`;
     const qr: string = await qrcode.toDataURL(`http://${url}`, {margin: 0});
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({

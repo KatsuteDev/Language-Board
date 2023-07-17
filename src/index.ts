@@ -20,6 +20,7 @@ import { app, BrowserWindow } from "electron";
 
 import * as auth from "./auth/index";
 import { activeTray } from "./tray";
+import * as config from "./config";
 
 export const osx: boolean = process.platform == "darwin";
 
@@ -55,7 +56,7 @@ export const launch: () => void = async () => {
             }
         });
 
-    // todo: read and parse config or write def
+    config.launch();
 
     auth.launch();
 }

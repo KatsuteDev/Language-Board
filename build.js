@@ -61,8 +61,12 @@ fs.writeFileSync(
     converter.makeHtml(fs.readFileSync(path.join(__dirname, "README.md"), "utf-8"))
         .replace("</head>", `<link rel="stylesheet" href="github.css"><title>Language Board Manual</title></head>`)
         .replace("<body>", `<body class="markdown-body" style="padding: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">`),
-    "utf-8");
+        "utf-8");
 
 // minify
 
 apply(path.join(__dirname, "dist"), file => fs.writeFileSync(file, minify(fs.readFileSync(file, "utf-8")), "utf-8"));
+
+// config
+
+fs.copyFileSync(path.join(__dirname, "src", "config.yml"), path.join(__dirname, "dist", "config.yml"));
