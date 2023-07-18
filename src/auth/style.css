@@ -83,9 +83,10 @@ header {
 
         -webkit-app-region: no-drag;
 
-        border: none;
         background: none;
+
         padding: 0;
+        border: none;
 
         width: 1.5rem;
         height: 1.5rem;
@@ -141,6 +142,7 @@ main {
         & #qr {
 
             background-color: white;
+
             padding: .5rem;
             border-radius: .25rem;
 

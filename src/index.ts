@@ -18,9 +18,9 @@
 
 import { app, BrowserWindow } from "electron";
 
-import * as auth from "./auth/index";
-import { activeTray } from "./tray";
 import * as config from "./config";
+import { activeTray } from "./tray";
+import * as auth from "./auth/index";
 
 export const osx: boolean = process.platform == "darwin";
 

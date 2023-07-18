@@ -1,9 +1,17 @@
-# Config changes will take affect next launch
+# Configuration changes will take effect the next time you launch the application.
 
-port: 7272
+# [Port]: 8000
+# The port number to use for the keyboard server
+port: 8000
 
+# [Screen Buffer]: 25
+# How far from the edge of the screen the keyboard preview can be.
 screen-buffer: 25
 
+# [Cursor Size]: 15
+# The size of the cursor. How far from the point of the cursor the keyboard preview should be.
 cursor-size: 15
 
+# [Pointer Speed]: 1.5
+# How virtual mouse pad movements should scale on the desktop.
 pointer-speed: 1.5

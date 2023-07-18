@@ -77,8 +77,8 @@ main {
 
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
 
     }
 
@@ -190,11 +190,7 @@ main {
 
         }
 
-        & #mouseinput.hidden {
-
-            display: none;
-
-        }
+        & #mouseinput.hidden { display: none; }
 
         & #value {
 

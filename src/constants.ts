@@ -27,5 +27,8 @@ export const config: string = fs.existsSync(path.join(__dirname, "../", "src"))
 
 export const defConfig: string = path.join(__dirname, "config.yml");
 
+export const logo: string = path.join(__dirname, "assets", "logo.png");
+export const icon: string = path.join(__dirname, "assets", "logo.ico");
+
 export const authWidth: number= 275;
 export const authHeight: number = 400;

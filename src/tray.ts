@@ -16,10 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as path from "path";
-
-import { Menu, Tray } from "electron"
 import { exec }from "child_process";
+import { Menu, Tray } from "electron";
 
 import { activeWindow } from ".";
 import * as constants from "./constants";
@@ -29,11 +27,12 @@ let tray: Tray;
 export const activeTray: () => Tray = () => tray;
 
 export const launch: (url: string) => void = (url: string) => {
-    tray = new Tray(path.join(__dirname, "../", "temp.png"));
+    tray = new Tray(constants.logo);
     tray.setContextMenu(Menu.buildFromTemplate([
         {
             label: constants.title,
             type: "normal",
+            icon: constants.logo,
             enabled: false
         },
         {

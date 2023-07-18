@@ -20,9 +20,9 @@ import * as fs from "fs";
 import * as http from "http";
 import * as path from "path";
 
-import { activeWindow } from "..";
 import * as app from "../app";
 import * as auth from "../auth";
+import { activeWindow } from "..";
 import * as constants from "../constants";
 
 const typeHTML : http.OutgoingHttpHeaders = {"Content-Type": "text/html"};
@@ -38,7 +38,7 @@ const html: string = fs.readFileSync(path.join(__dirname, "../", "web", "index.h
 const css : string = fs.readFileSync(path.join(__dirname, "../", "web", "style.css"), "utf-8");
 const js  : string = fs.readFileSync(path.join(__dirname, "../", "web", "web.js"), "utf-8");
 
-http.globalAgent.maxSockets = 10;
+http.globalAgent.maxSockets = 20;
 
 let locked: string;
 

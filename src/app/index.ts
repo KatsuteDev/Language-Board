@@ -21,9 +21,9 @@ import * as path from "path";
 import { BrowserWindow, ipcMain, screen } from "electron";
 import { Key, Point, clipboard, keyboard, mouse } from "@nut-tree/nut-js";
 
-import { activeWindow } from ".."
-import * as constants from "../constants";
 import { get } from "../config";
+import { activeWindow } from "..";
+import * as constants from "../constants";
 
 type Bounds = {top: number, left: number, right: number, bottom: number};
 

@@ -19,7 +19,7 @@
         "start:clean": "npm run prepare && electron .",
         "start:build": "npm run build && electron .",
         "start:forge": "npm run prepare && electron-forge start",
-        "start": "electron-forge start",
+        "start": "electron .",
         "// -- deploy -- //": "",
         "package": "npm run prepare && electron-forge package",
         "make": "npm run prepare && electron-forge make"

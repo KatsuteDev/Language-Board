@@ -20,12 +20,13 @@ const fs = require("fs");
 const path = require("path");
 
 const minify = (str) =>
-    str .replace(/<!--.*-->/gs, '')          // <!-- comments
-        .replace(/\/\*.*\*\//gs, '')         // /* comments
-        .replace(/(?<!(`|").*)\/\/.*$/gm,'') // // comments
-        .replace(/^ +/gm, '')                // leading space
-        .replace(/\r?\n/gm, ' ')             // new line
-        .replace(/ +/gm, ' ')                // extra spaces
+    str .replace(/<!--.*-->/gs, '')                // <!-- comments
+        .replace(/\/\*.*\*\//gs, '')               // /* comments
+        .replace(/(?<!(`|").*)\/\/.*$/gm,'')       // // comments
+        .replace(/^ +/gm, '')                      // leading space
+        .replace(/\r?\n/gm, ' ')                   // new line
+        .replace(/ +/gm, ' ')                      // extra spaces
+        .replace(/(?:(?<!\w) )|(?: (?!\w))/gm, '') // extra symbol spaces
         .trim();
 
 const apply = (dir, func, filter) => {
@@ -52,3 +53,4 @@ apply(path.join(__dirname, "dist"), file => fs.writeFileSync(file, minify(fs.rea
 // config
 
 fs.copyFileSync(path.join(__dirname, "src", "config.yml"), path.join(__dirname, "dist", "config.yml"));
+fs.cpSync(path.join(__dirname, "assets"), path.join(__dirname, "dist", "assets"), {recursive: true});

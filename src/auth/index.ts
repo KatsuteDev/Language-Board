@@ -16,17 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as qrcode from "qrcode";
-import { BrowserWindow, ipcMain } from "electron";
-
 import * as os from "os";
 import * as path from "path";
 
-import { activeWindow } from "..";
-import { get } from "../config";
+import * as qrcode from "qrcode";
+import { BrowserWindow, ipcMain } from "electron";
+
 import * as app from "../app";
 import * as tray from "../tray";
+import { get } from "../config";
 import * as server from "../web";
+import { activeWindow } from "..";
 import * as constants from "../constants";
 
 const codes: {[ip: string]: string} = {};
