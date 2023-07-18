@@ -21,8 +21,12 @@
         "start:forge": "npm run prepare && electron-forge start",
         "start": "electron .",
         "// -- deploy -- //": "",
-        "package": "npm run prepare && electron-forge package",
-        "make": "npm run prepare && electron-forge make"
+        "package:x32": "electron-forge package --arch=ia32",
+        "package:x64": "electron-forge package --arch=x64",
+        "package": "npm run prepare && npm run package:x32 && npm run package:x64",
+        "make:x32": "electron-forge make --skip-package --arch=ia32",
+        "make:x64": "electron-forge make --skip-package --arch=x64",
+        "make": "npm run package && npm run make:x32 && npm run make:x64 && node post.js"
     },
     "repository": {
         "type": "git",
@@ -52,42 +56,5 @@
     },
     "overrides": {
         "xml2js": "^0.5.0"
-    },
-    "config": {
-        "forge": {
-            "packagerConfig": {
-                "name": "Language Board",
-                "icon": "",
-                "appCopyright": "Copyright © Katsute 2023",
-                "ignore": [
-                    "^/\\.devcontainer$",
-                    "^/\\.github$",
-                    "^/src$",
-                    "^/\\.gitignore$",
-                    "^/\\w*\\.(js|png|gif)$",
-                    "^/tsconfig.json$"
-                ]
-            },
-            "makers": [
-                {
-                    "name": "@electron-forge/maker-squirrel",
-                    "config": {
-                        "name": "Language-Board",
-                        "copyright": "Copyright © Katsute 2023"
-                    }
-                },
-                {
-                    "name": "@electron-forge/maker-wix",
-                    "config": {
-                        "name": "Language Board",
-                        "icon": "",
-                        "manufacturer": "Katsute"
-                    }
-                },
-                {
-                    "name": "@electron-forge/maker-zip"
-                }
-            ]
-        }
     }
 }
