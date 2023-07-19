@@ -38,7 +38,7 @@ module.exports = {
             config: {
                 name: "Language-Board",
                 copyright: "Copyright © Katsute 2023",
-                iconUrl: "https://github.com/KatsuteDev/Language-Board/blob/main/assets/icon.ico",
+                iconUrl: "https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/icon.ico",
                 loadingGif: "assets/setup.gif",
                 setupExe: "Language Board Setup.exe",
                 setupIcon: "assets/icon.ico",

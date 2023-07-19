@@ -1,4 +1,5 @@
-<div align="center">
+<div id="top" align="center">
+    <br>
     <a href="https://github.com/KatsuteDev/Language-Board#readme">
         <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/icon.png" width=100>
     </a>
@@ -27,19 +28,19 @@ Download the latest stable version in the [releases](https://github.com/KatsuteD
 
 Type using language specific keyboards from your mobile device.
 
-<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-typing.png">
+<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-typing.gif">
 
 #### Key Presses
 
 Press <kbd>enter</kbd> and <kbd>backspace</kbd> keys directly from your keyboard.
 
-<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-keypress.png">
+<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-keypress.gif">
 
 #### Virtual Mouse
 
 Move and click using the virtual mousepad.
 
-<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-mouse.png">
+<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-mouse.gif">
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
@@ -78,10 +79,6 @@ How virtual mouse pad movements should scale on the desktop.
 ## &nbsp;
 
 ### Contributing
-
-For problems or feature requests, open a ticket on the [issues](https://github.com/KatsuteDev/Language-Board/issues) tab.
-
-To contribute directly to this project [fork](https://github.com/KatsuteDev/Language-Board/fork) this repository and open a [pull request](https://github.com/KatsuteDev/Language-Board/pulls).
 
 <!-- Copilot -->
 <table>
