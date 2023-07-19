@@ -41,11 +41,11 @@ const mask: RegExp = /[^a-zA-Z0-9]+/g;
 
 codeInput.oninput = (e: Event) => {
     codeInput.value = codeInput.value.replace(mask, "");
-    codeInput.value.length == 4 && submit();
+    codeInput.value.length === 4 && submit();
 };
 
 codeInput.onkeydown = (e: KeyboardEvent) => {
-    e.key === "Enter" && codeInput.value.length == 4 && submit();
+    e.key === "Enter" && codeInput.value.length === 4 && submit();
 };
 
 const submit: () => void = () => (window as any).api.send("auth:code", codeInput.value);

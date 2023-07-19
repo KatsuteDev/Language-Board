@@ -47,6 +47,7 @@ let isIME: boolean = false;
 
 input.addEventListener("compositionstart", (e: CompositionEvent) => {
     isIME = true;
+    send(input.value);
 });
 
 input.addEventListener("compositionend", (e: CompositionEvent) => {
@@ -106,7 +107,7 @@ if("ontouchstart" in window){
     mousepad.ontouchend = mousepad.ontouchcancel = (e: TouchEvent) => {
         e.preventDefault();
         holding = false;
-        request("GET", "mousereset");
+        request("GET", "reset");
     };
 
     mousepad.ontouchmove = (e: TouchEvent) => {
@@ -117,7 +118,7 @@ if("ontouchstart" in window){
             }
         }else{
             holding = false;
-            request("GET", "mousereset");
+            request("GET", "reset");
         }
     };
 }

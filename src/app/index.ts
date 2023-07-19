@@ -30,8 +30,11 @@ type Bounds = {top: number, left: number, right: number, bottom: number};
 let cursor: number;
 let speed: number;
 
+mouse.config.autoDelayMs = 100;
+keyboard.config.autoDelayMs = 100;
+
 export const launch: () => void = async () => {
-    const wA = screen.getPrimaryDisplay().workAreaSize;
+    const wA: Electron.Size = screen.getPrimaryDisplay().workAreaSize;
     const buf: number = +get("screen-buffer");
     const bounds: Bounds = {
         top: buf,
@@ -128,7 +131,7 @@ export const input: (v: string) => void = (v: string) => {
     const window: BrowserWindow = activeWindow();
     window.webContents.send("app:input", input);
 
-    if(input.length == 0)
+    if(input.length === 0)
         window.hide();
     else if(!window.isVisible())
         window.show();

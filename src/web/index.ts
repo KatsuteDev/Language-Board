@@ -21,6 +21,7 @@ import * as http from "http";
 import * as path from "path";
 
 import * as app from "../app";
+import { get } from "../config";
 import * as auth from "../auth";
 import { activeWindow } from "..";
 import * as constants from "../constants";
@@ -28,6 +29,7 @@ import * as constants from "../constants";
 const typeHTML : http.OutgoingHttpHeaders = {"Content-Type": "text/html"};
 const typeCSS  : http.OutgoingHttpHeaders = {"Content-Type": "text/css"};
 const typeJS   : http.OutgoingHttpHeaders = {"Content-Type": "text/javascript"};
+const typeIcon : http.OutgoingHttpHeaders = {"Content-Type": "image/x-icon"};
 const typeEvent: http.OutgoingHttpHeaders = {
                                                 "Content-Type": "text/event-stream",
                                                 "Cache-Control": "no-cache",
@@ -37,6 +39,7 @@ const typeEvent: http.OutgoingHttpHeaders = {
 const html: string = fs.readFileSync(path.join(__dirname, "../", "web", "index.html"), "utf-8");
 const css : string = fs.readFileSync(path.join(__dirname, "../", "web", "style.css"), "utf-8");
 const js  : string = fs.readFileSync(path.join(__dirname, "../", "web", "web.js"), "utf-8");
+const icon: string = fs.readFileSync(path.join(__dirname, "../", "assets", "icon.ico"), "binary");
 
 http.globalAgent.maxSockets = 20;
 
@@ -45,7 +48,7 @@ let locked: string;
 export const launch: () => void = () => {
     const server: http.Server = http.createServer(handler);
 
-    server.listen(7272, "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
+    server.listen(+get("port"), "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
 }
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
@@ -69,14 +72,15 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
             .replace("<var:code>", code)
             .replace("{{ state }}", `${s}`));
     }else if(p === "/favicon.ico"){
-
+        res.writeHead(200, typeIcon);
+        return res.end(icon, "binary");
     }else if(p === "/index.css"){
         res.writeHead(200, typeCSS);
         return res.end(css);
     }else if(p === "/index.js"){
         res.writeHead(200, typeJS);
         return res.end(js);
-    }else if(p == "/state"){
+    }else if(p === "/state"){
         let interval: NodeJS.Timeout;
         res.writeHead(200, typeEvent);
         return interval = setInterval(() => {
@@ -88,18 +92,18 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
     }else if(!deny){
         const q: any = url[1] ? parse(url[1]) : undefined;
 
-        if(p == "/input")
+        if(p === "/input")
             app.input(q.$value);
-        else if(p == "/submit")
+        else if(p === "/submit")
             app.submit(q.$value);
-        else if(p == "/key")
+        else if(p === "/key")
             app.key(q.$value);
-        else if(p == "/mouse")
+        else if(p === "/mouse")
             app.pos({
                 x: +q.$x,
                 y: +q.$y
             });
-        else if(p == "/mousereset")
+        else if(p === "/reset")
             app.reset();
     }
 
@@ -114,7 +118,7 @@ const parse: (raw: string) => {[k: string]: string | undefined} = (raw: string) 
     for(const pair of pairs){
         if(pair.includes('=')){
             const kv: string[] = pair.split('=');
-            obj['$' + decodeURIComponent(kv[0])] = kv.length == 2 ? decodeURIComponent(kv[1]) : undefined;
+            obj['$' + decodeURIComponent(kv[0])] = kv.length === 2 ? decodeURIComponent(kv[1]) : undefined;
         }
     }
     return obj;

@@ -15,25 +15,25 @@ Download the latest stable version in the [releases](https://github.com/KatsuteD
 > Running this application may trigger your antivirus, this is a FALSE POSITIVE.
 > Add this application to the exception list if you don't want to see alerts.
 >
-> This occurs because the application is not signed, it simply does not make financial sense to purchase a $500 signature to sign a minor application.
+> This occurs because the application is not signed, it does not make financial sense to purchase a $500 signature to sign a minor application.
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
 ### Features
 
-##### Keyboard Typing
+#### Keyboard Typing
 
 Type using language specific keyboards from your mobile device.
 
 <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-typing.png">
 
-##### Key Presses
+#### Key Presses
 
 Press <kbd>enter</kbd> and <kbd>backspace</kbd> keys directly from your keyboard.
 
 <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-keypress.png">
 
-##### Virtual Mouse
+#### Virtual Mouse
 
 Move and click using the virtual mousepad.
 
@@ -47,25 +47,25 @@ Configuration can be changed by modifying the `config.yml` file, access the file
 
 Changes will take effect the next time you launch the application.
 
-##### Port `port`
+#### Port `port`
 
 *Default:* `8000`
 
 The port number to use for the keyboard server.
 
-##### Screen Buffer `screen-buffer`
+#### Screen Buffer `screen-buffer`
 
 *Default:* `25`
 
 How far from the edge of the screen the keyboard preview can be.
 
-##### Cursor Size `cursor-size`
+#### Cursor Size `cursor-size`
 
 *Default:* `15`
 
 The size of the cursor. How far from the point of the cursor the keyboard preview should be.
 
-##### Pointer Speed `pointer-speed`
+#### Pointer Speed `pointer-speed`
 
 *Default:* `1.5`
 

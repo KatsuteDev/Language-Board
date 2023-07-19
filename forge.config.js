@@ -18,6 +18,8 @@
 
 const path = require("path");
 
+const pkg = require("./package.json");
+
 module.exports = {
     packagerConfig: {
         name: "Language Board",
@@ -49,13 +51,14 @@ module.exports = {
             name: "@electron-forge/maker-wix",
             config: {
                 name: "Language Board",
+                description: pkg.description,
                 manufacturer: "Katsute",
                 icon: "assets/icon.ico",
                 ui: {
                     chooseDirectory: true,
                     images: {
-                        background: path.join(__dirname, "assets", "setup.png"),
-                        banner: path.join(__dirname, "assets", "setup.png")
+                        background: path.join(__dirname, "assets", "installer-background.png"),
+                        banner: path.join(__dirname, "assets", "installer-banner.png")
                     }
                 }
             }

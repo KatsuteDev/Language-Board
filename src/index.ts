@@ -22,8 +22,6 @@ import * as config from "./config";
 import { activeTray } from "./tray";
 import * as auth from "./auth/index";
 
-export const osx: boolean = process.platform == "darwin";
-
 let window: BrowserWindow;
 
 export const activeWindow: (browserWindow?: BrowserWindow) => BrowserWindow = (browserWindow?: BrowserWindow) => {
@@ -49,11 +47,9 @@ export const launch: () => void = async () => {
             }
         })
         .on("window-all-closed", () => {
-            if(!osx){
-                activeTray() && activeTray().destroy();
-                app.quit();
-                process.exit(0);
-            }
+            activeTray() && activeTray().destroy();
+            app.quit();
+            process.exit(0);
         });
 
     config.launch();

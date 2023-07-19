@@ -18,6 +18,7 @@
 
 const fs = require("fs");
 const path = require("path");
+
 const pkg = require("./package.json");
 
 const make = path.join(__dirname, "out", "make");
