@@ -1,5 +1,7 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/header.png">
+    <a href="https://github.com/KatsuteDev/Language-Board#readme">
+        <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/icon.png" width=100>
+    </a>
     <h3>Language Board</h3>
     <p>Use language keyboards from a mobile device as a desktop keyboard and mouse.</p>
 </div>
@@ -80,13 +82,6 @@ How virtual mouse pad movements should scale on the desktop.
 For problems or feature requests, open a ticket on the [issues](https://github.com/KatsuteDev/Language-Board/issues) tab.
 
 To contribute directly to this project [fork](https://github.com/KatsuteDev/Language-Board/fork) this repository and open a [pull request](https://github.com/KatsuteDev/Language-Board/pulls).
-
-##### Contributors
-
-<!-- Contributors -->
-<!-- Contributors -->
-
-##### AI Notice
 
 <!-- Copilot -->
 <table>

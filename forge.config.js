@@ -51,7 +51,6 @@ module.exports = {
             name: "@electron-forge/maker-wix",
             config: {
                 name: "Language Board",
-                description: pkg.description,
                 manufacturer: "Katsute",
                 icon: "assets/icon.ico",
                 ui: {

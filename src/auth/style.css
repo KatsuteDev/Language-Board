@@ -72,9 +72,21 @@ header {
 
     color: white;
 
+    > div {
+
+        display: flex;
+
+    }
+
+    & img {
+
+        height: 1rem;
+        padding: 0 .25rem;
+
+    }
+
     & p {
 
-        padding: 0 .25rem;
         font-size: .75rem;
 
     }

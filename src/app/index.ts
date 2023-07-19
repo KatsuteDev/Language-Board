@@ -48,6 +48,7 @@ export const launch: () => void = async () => {
     const window: BrowserWindow = activeWindow(new BrowserWindow({
         title: constants.title,
         show: false,
+        icon: constants.icon,
 
         width: 0,
         height: 0,

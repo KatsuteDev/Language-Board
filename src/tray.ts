@@ -17,7 +17,7 @@
  */
 
 import { exec }from "child_process";
-import { Menu, Tray } from "electron";
+import { Menu, Tray, nativeImage } from "electron";
 
 import { activeWindow } from ".";
 import * as constants from "./constants";
@@ -32,7 +32,7 @@ export const launch: (url: string) => void = (url: string) => {
         {
             label: constants.title,
             type: "normal",
-            icon: constants.logo,
+            icon: nativeImage.createFromPath(constants.icon).resize({width: 16}),
             enabled: false
         },
         {

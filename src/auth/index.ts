@@ -40,8 +40,9 @@ export const launch: () => void = async () => {
     const qr: string = await qrcode.toDataURL(`http://${url}`, {margin: 0});
 
     const window: BrowserWindow = activeWindow(new BrowserWindow({
-        title: `${constants.title} Pairing`,
+        title: constants.title,
         show: false,
+        icon: constants.icon,
 
         width: constants.authWidth,
         height: constants.authHeight,
@@ -74,7 +75,7 @@ export const launch: () => void = async () => {
     window.removeMenu();
 
     window.once("ready-to-show", () => {
-        window.webContents.send("auth:init", {title: `${constants.title} Pairing`, qr, url});
+        window.webContents.send("auth:init", {title: `${constants.title} Pairing`, favicon: constants.logo, qr, url});
         window.show();
     });
 

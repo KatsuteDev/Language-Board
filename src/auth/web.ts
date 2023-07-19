@@ -24,8 +24,9 @@ window.onbeforeunload = () => true;
 
 // api
 
-(window as any).api.on("auth:init", (data: {title: string, qr: string, url: string}) => {
+(window as any).api.on("auth:init", (data: {title: string, favicon: string, qr: string, url: string}) => {
     (document.querySelector("#title") as HTMLParagraphElement).innerText = data.title;
+    (document.querySelector("#favicon") as HTMLImageElement).src = data.favicon;
     (document.querySelector("#qr") as HTMLImageElement).src = data.qr;
     (document.querySelector("#url") as HTMLParagraphElement).innerText = data.url;
 });
