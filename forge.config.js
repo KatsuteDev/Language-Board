@@ -18,8 +18,6 @@
 
 const path = require("path");
 
-const pkg = require("./package.json");
-
 module.exports = {
     packagerConfig: {
         name: "Language Board",
