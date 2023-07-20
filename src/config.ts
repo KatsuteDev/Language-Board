@@ -24,7 +24,7 @@ import * as constants from "./constants";
 let def: any;
 let cfg: any;
 
-export const get: (key: string) => any = (key: string) => cfg[key] || def[key];
+export const get: (key: string) => any = (key: string) => cfg === null || cfg[key] === undefined ? def[key] : cfg[key];
 
 export const launch: () => void = () => {
     if(!fs.existsSync(constants.config))

@@ -52,8 +52,8 @@ export const launch: () => void = () => {
 
     server.listen(+get("port"), "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
 
-    key = get("enable-keys").toLowerCase() === "true";
-    mouse = get("enable-mouse").toLowerCase() === "true";
+    key = get("enable-keys");
+    mouse = get("enable-mouse");
 }
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";

@@ -54,6 +54,8 @@ export const launch: () => void = async () => {
         width: 0,
         height: 0,
 
+        movable: false,
+
         resizable: false,
         minimizable: false,
         maximizable: false,

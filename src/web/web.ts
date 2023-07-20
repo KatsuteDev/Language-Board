@@ -70,7 +70,7 @@ input.oninput = (e: Event) => !isIME && send();
 
 input.onkeydown = (e: KeyboardEvent) => {
     if(!isIME){
-        const v: string = (input.value || "").trim();
+        const v: string = input.value || "";
 
         if(v !== ""){
             if(e.key === "Enter"){
