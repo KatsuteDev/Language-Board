@@ -43,25 +43,27 @@ const request: (method: string, url: string) => void = (method: string, url: str
 const input: HTMLInputElement = document.querySelector("#value")! as HTMLInputElement;
 
 // IME
+
+let buffer: string = "";
 let isIME: boolean = false;
 
 input.addEventListener("compositionstart", (e: CompositionEvent) => {
     isIME = true;
-    send(input.value);
+    buffer = input.value || "";
 });
 
 input.addEventListener("compositionend", (e: CompositionEvent) => {
     isIME = false;
-    send(input.value + e.data);
+    buffer = "";
 });
 
 input.addEventListener("compositionupdate", (e: CompositionEvent) => {
-    send(input.value + e.data);
+    send(buffer + e.data);
 });
 
 // submit
 
-input.oninput = (e: Event) => send();
+input.oninput = (e: Event) => !isIME && send();
 
 input.onkeydown = (e: KeyboardEvent) => {
     if(!isIME){
@@ -88,6 +90,7 @@ const keypress: (value: string) => void = (value: string) => request("GET", `key
 
 input.onblur = () => input.focus();
 input.focus();
+send();
 
 // mouse
 

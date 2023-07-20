@@ -42,6 +42,7 @@ export const launch: () => void = async () => {
         right: wA.width - buf,
         bottom: wA.height - buf
     };
+
     cursor = +get("cursor-size");
     speed  = +get("pointer-speed");
 

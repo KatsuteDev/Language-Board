@@ -89,7 +89,7 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
             else
                 clearInterval(interval);
         }, 500);
-    }else if(!deny){
+    }else if(s === "auth"){
         const q: any = url[1] ? parse(url[1]) : undefined;
 
         if(p === "/input")
