@@ -16,6 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+let __key__: any = "__key__";
+let __mouse__: any = "__mouse__";
+
 const body: HTMLBodyElement = document.querySelector("body")!;
 
 // requests
@@ -75,7 +78,7 @@ input.onkeydown = (e: KeyboardEvent) => {
                 input.value = "";
                 send();
             }
-        }else if(e.key === "Enter" || e.key === "Backspace"){
+        }else if(__key__ && (e.key === "Enter" || e.key === "Backspace")){
             keypress(e.key);
             input.value = "";
         }
@@ -99,7 +102,7 @@ const mousepad: HTMLDivElement = document.querySelector("#mousepad")! as HTMLDiv
 
 let holding: boolean = false;
 
-if("ontouchstart" in window){
+if(__mouse__ && "ontouchstart" in window){
     minput.classList.remove("hidden");
 
     mousepad.ontouchstart = (e: TouchEvent) => {
@@ -124,8 +127,7 @@ if("ontouchstart" in window){
             request("GET", "reset");
         }
     };
+
+    (document.querySelector("#lmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("LeftClick");
+    (document.querySelector("#rmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("RightClick");
 }
-
-(document.querySelector("#lmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("LeftClick");
-
-(document.querySelector("#rmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("RightClick");

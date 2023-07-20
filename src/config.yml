@@ -8,6 +8,14 @@ port: 8000
 # How far from the edge of the screen the keyboard preview can be.
 screen-buffer: 25
 
+# [Key Presses]: true
+# Enable the direct use of keyboard [Enter] and [Backspace] keys.
+enable-keys: true
+
+# [Mousepad]: true
+# Enable the use of the mouse pad and mouse clicks.
+enable-mouse: true
+
 # [Cursor Size]: 15
 # The size of the cursor. How far from the point of the cursor the keyboard preview should be.
 cursor-size: 15

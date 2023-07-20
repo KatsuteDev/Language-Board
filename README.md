@@ -56,6 +56,18 @@ Changes will take effect the next time you launch the application.
 
 The port number to use for the keyboard server.
 
+#### Key Presses `enable-keys`
+
+*Default:* `true`
+
+Enable the direct use of keyboard <kbd>enter</kbd> and <kbd>backspace</kbd> keys.
+
+#### Mousepad `enable-mouse`
+
+*Default:* `true`
+
+Enable the use of the mouse pad and mouse clicks.
+
 #### Screen Buffer `screen-buffer`
 
 *Default:* `25`

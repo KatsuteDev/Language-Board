@@ -44,11 +44,16 @@ const icon: string = fs.readFileSync(path.join(__dirname, "../", "assets", "icon
 http.globalAgent.maxSockets = 20;
 
 let locked: string;
+let key: boolean = false;
+let mouse: boolean = false;
 
 export const launch: () => void = () => {
     const server: http.Server = http.createServer(handler);
 
     server.listen(+get("port"), "0.0.0.0"); // <- enforce IPv4 https://stackoverflow.com/a/41295130
+
+    key = get("enable-keys").toLowerCase() === "true";
+    mouse = get("enable-mouse").toLowerCase() === "true";
 }
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
@@ -79,7 +84,9 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
         return res.end(css);
     }else if(p === "/index.js"){
         res.writeHead(200, typeJS);
-        return res.end(js);
+        return res.end(js
+            .replace(`"__key__"`, `${key}`)
+            .replace(`"__mouse__"`, `${mouse}`));
     }else if(p === "/state"){
         let interval: NodeJS.Timeout;
         res.writeHead(200, typeEvent);
@@ -96,14 +103,14 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
             app.input(q.$value);
         else if(p === "/submit")
             app.submit(q.$value);
-        else if(p === "/key")
+        else if(key && p === "/key")
             app.key(q.$value);
-        else if(p === "/mouse")
+        else if(mouse && p === "/mouse")
             app.pos({
                 x: +q.$x,
                 y: +q.$y
             });
-        else if(p === "/reset")
+        else if(mouse && p === "/reset")
             app.reset();
     }
 
