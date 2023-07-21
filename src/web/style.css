@@ -135,6 +135,23 @@ main {
 
         }
 
+        & #value {
+
+            border: 0;
+            border-radius: 0;
+
+            font-size: 1.5rem;
+            text-align: right;
+            text-overflow: ellipsis;
+
+            overflow: hidden;
+            white-space: nowrap;
+
+            padding: .5rem;
+            margin-bottom: 1rem;
+
+        }
+
         & #mouseinput {
 
             display: flex;
@@ -191,22 +208,6 @@ main {
         }
 
         & #mouseinput.hidden { display: none; }
-
-        & #value {
-
-            border: 0;
-
-            font-size: 1.5rem;
-            text-align: right;
-            text-overflow: ellipsis;
-
-            overflow: hidden;
-            white-space: nowrap;
-
-            padding: .5rem;
-            margin-bottom: 1rem;
-
-        }
 
     }
 

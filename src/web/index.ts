@@ -58,6 +58,8 @@ export const launch: () => void = () => {
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
 
+let queue: number = -1;
+
 export const handler: http.RequestListener = (req: http.IncomingMessage, res: http.ServerResponse) => {
     const ip: string = req.socket.remoteAddress || "";
     const url: string[] = (req.url || "").split('?');
@@ -98,10 +100,12 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
         }, 500);
     }else if(s === "auth"){
         const q: any = url[1] ? parse(url[1]) : undefined;
-
-        if(p === "/input")
-            app.input(q.$value);
-        else if(p === "/submit")
+        if(p === "/input"){
+            if(+q.$queue === -1 || +q.$queue > queue){
+                app.input(q.$value);
+                queue = q.$queue;
+            }
+        }else if(p === "/submit")
             app.submit(q.$value);
         else if(key && p === "/key")
             app.key(q.$value);

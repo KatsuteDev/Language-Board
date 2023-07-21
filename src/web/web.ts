@@ -38,7 +38,7 @@ stream.onmessage = (e: MessageEvent) => {
 const request: (method: string, url: string) => void = (method: string, url: string) => {
     const request: XMLHttpRequest = new XMLHttpRequest();
     request.open(method.toUpperCase(), url, true);
-    request.send(null);
+    request.send();
 }
 
 // input
@@ -58,6 +58,7 @@ input.addEventListener("compositionstart", (e: CompositionEvent) => {
 input.addEventListener("compositionend", (e: CompositionEvent) => {
     isIME = false;
     buffer = "";
+    send();
 });
 
 input.addEventListener("compositionupdate", (e: CompositionEvent) => {
@@ -71,10 +72,9 @@ input.oninput = (e: Event) => !isIME && send();
 input.onkeydown = (e: KeyboardEvent) => {
     if(!isIME){
         const v: string = input.value || "";
-
         if(v !== ""){
             if(e.key === "Enter"){
-                request("GET", `submit?value=${encodeURIComponent(v)}`);
+                request("HEAD", `submit?value=${encodeURIComponent(v)}`);
                 input.value = "";
                 send();
             }
@@ -85,15 +85,13 @@ input.onkeydown = (e: KeyboardEvent) => {
     }
 }
 
-const send: (value?: string) => void = (value?: string) => request("GET", `input?value=${encodeURIComponent(value || (input.value || "").trim())}`);
+let queue: number = -1;
 
-const keypress: (value: string) => void = (value: string) => request("GET", `key?value=${encodeURIComponent(value)}`);
+const send: (value?: string) => void = (value?: string) => request("HEAD", `input?value=${encodeURIComponent(value || input.value || "")}&queue=${++queue}`);
 
-// input lock
+const keypress: (value: string) => void = (value: string) => request("HEAD", `key?value=${encodeURIComponent(value)}`);
 
-input.onblur = () => input.focus();
-input.focus();
-send();
+request("HEAD", `input?value=${encodeURIComponent("")}&queue=-1`); // clear input and reset queue on page reload
 
 // mouse
 
@@ -113,18 +111,18 @@ if(__mouse__ && "ontouchstart" in window){
     mousepad.ontouchend = mousepad.ontouchcancel = (e: TouchEvent) => {
         e.preventDefault();
         holding = false;
-        request("GET", "reset");
+        request("HEAD", "reset");
     };
 
     mousepad.ontouchmove = (e: TouchEvent) => {
         e.preventDefault();
         if(mousepad === document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY)){
             if(holding){
-                request("GET", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}`);
+                request("HEAD", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}`);
             }
         }else{
             holding = false;
-            request("GET", "reset");
+            request("HEAD", "reset");
         }
     };
 
