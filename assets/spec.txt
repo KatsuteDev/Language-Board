@@ -1,0 +1,7 @@
+RESIZE
+
+ffmpeg -i <input> -filter:v scale=<w>:<h> -c:a copy <output>
+
+JOIN
+
+ffmpeg -ss <start> -t <dur> -i <input> -ss <start> -t <dur> -i <input> -filter_complex hstack <output>

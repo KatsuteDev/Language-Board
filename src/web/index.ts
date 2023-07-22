@@ -58,7 +58,8 @@ export const launch: () => void = () => {
 
 const state: (ip: string) => "pair" | "auth" | "deny" = (ip: string) => ip === locked ? "auth" : locked ? "deny" : "pair";
 
-let queue: number = -1;
+let kq: number = -1;
+let mq: number = -1;
 
 export const handler: http.RequestListener = (req: http.IncomingMessage, res: http.ServerResponse) => {
     const ip: string = req.socket.remoteAddress || "";
@@ -101,21 +102,27 @@ export const handler: http.RequestListener = (req: http.IncomingMessage, res: ht
     }else if(s === "auth"){
         const q: any = url[1] ? parse(url[1]) : undefined;
         if(p === "/input"){
-            if(+q.$queue === -1 || +q.$queue > queue){
+            if(+q.$queue === -1 || +q.$queue > kq){ // discard requests that are outdated
                 app.input(q.$value);
-                queue = q.$queue;
+                kq = +q.$queue;
             }
-        }else if(p === "/submit")
+        }else if(p === "/submit"){
             app.submit(q.$value);
-        else if(key && p === "/key")
+        }else if(key && p === "/key"){
             app.key(q.$value);
-        else if(mouse && p === "/mouse")
-            app.pos({
-                x: +q.$x,
-                y: +q.$y
-            });
-        else if(mouse && p === "/reset")
+        }else if(mouse && p === "/mouse"){
+            if(+q.$queue === -1){
+                app.reset();
+            }else if(+q.$queue > mq){ // discard request that are outdated
+                app.pos({
+                    x: +q.$x,
+                    y: +q.$y
+                });
+            }
+            mq = +q.$queue;
+        }else if(mouse && p === "/reset"){
             app.reset();
+        }
     }
 
     res.end();

@@ -85,9 +85,9 @@ input.onkeydown = (e: KeyboardEvent) => {
     }
 }
 
-let queue: number = -1;
+let kq: number = -1;
 
-const send: (value?: string) => void = (value?: string) => request("HEAD", `input?value=${encodeURIComponent(value || input.value || "")}&queue=${++queue}`);
+const send: (value?: string) => void = (value?: string) => request("HEAD", `input?value=${encodeURIComponent(value || input.value || "")}&queue=${++kq}`);
 
 const keypress: (value: string) => void = (value: string) => request("HEAD", `key?value=${encodeURIComponent(value)}`);
 
@@ -97,6 +97,8 @@ request("HEAD", `input?value=${encodeURIComponent("")}&queue=-1`); // clear inpu
 
 const minput: HTMLDivElement = document.querySelector("#mouseinput")! as HTMLDivElement;
 const mousepad: HTMLDivElement = document.querySelector("#mousepad")! as HTMLDivElement;
+
+let mq: number = -1;
 
 let holding: boolean = false;
 
@@ -118,7 +120,7 @@ if(__mouse__ && "ontouchstart" in window){
         e.preventDefault();
         if(mousepad === document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY)){
             if(holding){
-                request("HEAD", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}`);
+                request("HEAD", `mouse?x=${Math.round((e.touches[0].clientX - mousepad.offsetLeft + Number.EPSILON) * 1000) / 1000}&y=${Math.round((e.touches[0].clientY - mousepad.offsetTop + Number.EPSILON) * 1000) / 1000}&queue=${++mq}`);
             }
         }else{
             holding = false;
@@ -128,4 +130,6 @@ if(__mouse__ && "ontouchstart" in window){
 
     (document.querySelector("#lmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("LeftClick");
     (document.querySelector("#rmb") as HTMLButtonElement).onclick = (e: MouseEvent) => keypress("RightClick");
+
+    request("HEAD", "mouse?queue=-1"); // reset mouse pos and queue on page reload
 }
