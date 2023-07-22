@@ -51,6 +51,7 @@ module.exports = {
                 name: "Language Board",
                 manufacturer: "Katsute",
                 icon: "assets/icon.ico",
+                appUserModelId: "dev.katsute.language-board.exe",
                 ui: {
                     chooseDirectory: true,
                     images: {
