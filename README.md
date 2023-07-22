@@ -28,19 +28,25 @@ Download the latest stable version in the [releases](https://github.com/KatsuteD
 
 Type using language specific keyboards from your mobile device.
 
-<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-typing.gif" height="400">
+<div align="center">
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-typing.gif" height="300">
+</div>
 
 #### Key Presses
 
 Press <kbd>enter</kbd> and <kbd>backspace</kbd> keys directly from your keyboard.
 
-<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-keys.gif" height="400">
+<div align="center">
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-keys.gif" height="300">
+</div>
 
 #### Virtual Mouse
 
 Move and click using the virtual mousepad.
 
-<img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-mouse.gif" height="400">
+<div align="center">
+    <img src="https://raw.githubusercontent.com/KatsuteDev/Language-Board/main/assets/readme-mouse.gif" height="300">
+</div>
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
