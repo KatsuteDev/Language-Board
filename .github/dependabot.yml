@@ -23,8 +23,6 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: [version-update:semver-patch]
-      - dependency-name: "electron"
-        update-types: [version-update:semver-major]
     groups:
       electron-forge:
         patterns: ["@electron-forge/*"]
