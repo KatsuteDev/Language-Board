@@ -11,7 +11,7 @@
         "update": "npm update -D && npm run prune",
         "// -- build -- //": "",
         "build:js": "node build.js",
-        "build:ts": "tsc --outDir dist --target es2022 --module commonjs --moduleResolution nodenext --strict --alwaysStrict --removeComments --pretty",
+        "build:ts": "tsc --outDir dist --target es2022 --module nodenext --moduleResolution nodenext --strict --alwaysStrict --removeComments --pretty",
         "build:md": "",
         "build": "npm run build:ts && npm run build:js",
         "prepare": "npm run clean && npm run build",
