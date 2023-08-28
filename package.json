@@ -51,7 +51,7 @@
         "@electron-forge/maker-zip": "6.4.1",
         "@types/node": "20.5.0",
         "@types/qrcode": "1.5.1",
-        "electron": "26.0.0",
+        "electron": "26.1.0",
         "typescript": "5.2.2"
     },
     "overrides": {
