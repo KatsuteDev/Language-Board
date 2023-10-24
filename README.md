@@ -96,8 +96,6 @@ How virtual mouse pad movements should scale on the desktop.
 
 ## &nbsp;
 
-### Contributing
-
 <!-- Copilot -->
 <table>
     <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/Katsute/Manager/main/assets/copilot-dark.png#gh-dark-mode-only" width="50">
@@ -107,9 +105,5 @@ How virtual mouse pad movements should scale on the desktop.
     <p>AI generated code is <b>strictly prohibited</b> on this repository.</p>
 </table>
 <!-- Copilot -->
-
-<div align="right"><a href="#top"><code>▲</code></a></div>
-
-### License
 
 This software is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Language-Board/blob/main/LICENSE).
