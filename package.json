@@ -45,10 +45,10 @@
         "yaml": "2.3.4"
     },
     "devDependencies": {
-        "@electron-forge/cli": "7.1.0",
-        "@electron-forge/maker-squirrel": "7.1.0",
-        "@electron-forge/maker-wix": "7.1.0",
-        "@electron-forge/maker-zip": "7.1.0",
+        "@electron-forge/cli": "7.2.0",
+        "@electron-forge/maker-squirrel": "7.2.0",
+        "@electron-forge/maker-wix": "7.2.0",
+        "@electron-forge/maker-zip": "7.2.0",
         "@types/node": "20.10.0",
         "@types/qrcode": "1.5.5",
         "electron": "27.1.2",
