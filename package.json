@@ -52,7 +52,7 @@
         "@types/node": "20.10.0",
         "@types/qrcode": "1.5.5",
         "electron": "27.1.3",
-        "typescript": "5.3.2"
+        "typescript": "5.3.3"
     },
     "overrides": {
         "xml2js": "^0.5.0"
