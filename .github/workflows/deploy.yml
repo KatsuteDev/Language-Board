@@ -7,9 +7,7 @@ on:
 jobs:
   deploy:
     name: Deploy
-    uses: Katsute/Workflows/.github/workflows/npm.electron.deploy.yml@main
+    uses: KatsuteDev/Workflows/.github/workflows/npm.deploy.electron.yml@main
     with:
       environment: Electron Make
-      rebuild: false
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
