@@ -39,7 +39,7 @@
     },
     "homepage": "https://github.com/KatsuteDev/Language-Board#readme",
     "dependencies": {
-        "@nut-tree/nut-js": "3.1.2",
+        "@nut-tree/nut-js": "4.0.0",
         "electron-squirrel-startup": "1.0.0",
         "qrcode": "1.5.3",
         "yaml": "2.4.0"
