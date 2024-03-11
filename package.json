@@ -42,7 +42,7 @@
         "@nut-tree/nut-js": "4.0.0",
         "electron-squirrel-startup": "1.0.0",
         "qrcode": "1.5.3",
-        "yaml": "2.4.0"
+        "yaml": "2.4.1"
     },
     "devDependencies": {
         "@electron-forge/cli": "7.3.0",
